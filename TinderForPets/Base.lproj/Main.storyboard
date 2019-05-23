@@ -71,6 +71,9 @@
                                                     <constraint firstAttribute="width" constant="35" id="tAI-iw-BgC"/>
                                                 </constraints>
                                                 <state key="normal" image="startnocircle"/>
+                                                <connections>
+                                                    <segue destination="VPl-KC-sSx" kind="show" id="tw2-cY-8Q4"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -270,8 +273,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NHF-2V-rGQ">
-                                <rect key="frame" x="0.0" y="118" width="414" height="744"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NHF-2V-rGQ">
+                                <rect key="frame" x="0.0" y="112" width="414" height="750"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="488-ud-IBo">
                                     <size key="itemSize" width="50" height="50"/>
@@ -294,20 +297,43 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </collectionReusableView>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vyJ-95-uwa">
+                                <rect key="frame" x="0.0" y="44" width="414" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Je-D7-al8">
+                                        <rect key="frame" x="8" y="8" width="46" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="H4D-19-2he"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="7wE-zc-APH"/>
+                                    <constraint firstItem="1Je-D7-al8" firstAttribute="top" secondItem="vyJ-95-uwa" secondAttribute="top" constant="8" id="Bmq-Ka-udJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="1Je-D7-al8" secondAttribute="bottom" constant="8" id="SGE-6V-jMj"/>
+                                    <constraint firstItem="1Je-D7-al8" firstAttribute="leading" secondItem="vyJ-95-uwa" secondAttribute="leading" constant="8" id="W9V-vM-eKl"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="vyJ-95-uwa" firstAttribute="centerX" secondItem="k6O-RY-viQ" secondAttribute="centerX" id="CzJ-Fu-wiB"/>
                             <constraint firstItem="NHF-2V-rGQ" firstAttribute="leading" secondItem="YFa-aV-yuF" secondAttribute="leading" id="Ij6-AJ-Eq4"/>
+                            <constraint firstItem="vyJ-95-uwa" firstAttribute="trailing" secondItem="YFa-aV-yuF" secondAttribute="trailing" id="Lyu-Gf-xCv"/>
                             <constraint firstItem="YFa-aV-yuF" firstAttribute="bottom" secondItem="NHF-2V-rGQ" secondAttribute="bottom" id="Q9b-oq-Vvg"/>
+                            <constraint firstItem="vyJ-95-uwa" firstAttribute="top" secondItem="YFa-aV-yuF" secondAttribute="top" id="W3M-iN-IG5"/>
                             <constraint firstItem="YFa-aV-yuF" firstAttribute="trailing" secondItem="NHF-2V-rGQ" secondAttribute="trailing" id="Xaw-Vk-E8o"/>
-                            <constraint firstItem="NHF-2V-rGQ" firstAttribute="top" secondItem="YFa-aV-yuF" secondAttribute="top" id="el0-rF-Un8"/>
+                            <constraint firstItem="vyJ-95-uwa" firstAttribute="leading" secondItem="YFa-aV-yuF" secondAttribute="leading" id="cnG-8E-uL2"/>
+                            <constraint firstItem="NHF-2V-rGQ" firstAttribute="top" secondItem="vyJ-95-uwa" secondAttribute="bottom" constant="8" id="pMn-Ef-dKk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="YFa-aV-yuF"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WtQ-uZ-bCl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2066.666666666667" y="107.8125"/>
+            <point key="canvasLocation" x="2349" y="99"/>
         </scene>
     </scenes>
     <resources>
