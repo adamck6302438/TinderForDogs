@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageViewContainer: UIView!
+    @IBOutlet weak var nopeIcon: UIImageView!
+    @IBOutlet weak var likeIcon: UIImageView!
     
     var networkManger = NetworkManager()
     var filterSizes = [(name: String, isSelected: Bool)]()
@@ -23,11 +25,17 @@ class ViewController: UIViewController {
     var centerOfImageView = CGPoint.zero
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         setupFilterArrays()
+        setupUI()
         networkManger.fetchAccessToken()
-        self.centerOfImageView = self.imageView.center
+        
+
     }
+    
+    
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let tLocation = touches.first?.location(in: self.view) else { return }
@@ -49,7 +57,14 @@ class ViewController: UIViewController {
             let angleMultiplier = (self.imageView.center.x - view.center.x) / (view.frame.maxX / 2)
             let angle: CGFloat = (10.0 * .pi / 180) * angleMultiplier
             self.imageView.transform = CGAffineTransform(rotationAngle: angle)
-            self.self.imageView.center = CGPoint(x: self.centerOfImageView.x + translation.x, y: self.centerOfImageView.y + translation.y)
+            self.self.imageView.center = CGPoint(x: self.view.center.x + translation.x, y: self.centerOfImageView.y + translation.y)
+            
+            if translation.x < 0 {
+                self.nopeIcon.alpha = -(translation.x/100.0)
+            } else if translation.x > 0 {
+                self.likeIcon.alpha = translation.x/100.0
+            }
+            
         case .ended:
             let distanceFromCenterX = (self.imageView.center.x - view.center.x) / view.frame.maxX
             if distanceFromCenterX < -0.25 {
@@ -72,7 +87,7 @@ class ViewController: UIViewController {
                 }
             } else {
                 UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
-                    self.self.imageView.center = CGPoint(x: self.centerOfImageView.x, y: self.centerOfImageView.y)
+                    self.self.imageView.center = CGPoint(x: self.view.center.x, y: self.centerOfImageView.y)
                     self.self.imageView.transform = CGAffineTransform(rotationAngle: 0)
                 }, completion: nil)
             }
@@ -84,7 +99,7 @@ class ViewController: UIViewController {
     func showNextCard() {
         //TODO: Need to have more than 1 imageView on screen @ once.
         // Need to setup next card while current card is on screen.
-        self.imageView.center = CGPoint(x: self.centerOfImageView.x, y: self.centerOfImageView.y)
+        self.imageView.center = CGPoint(x: self.view.center.x, y: self.centerOfImageView.y)
         self.imageView.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
@@ -92,6 +107,17 @@ class ViewController: UIViewController {
         }, completion: nil)
 
         
+        
+    }
+    
+    
+    //MARK: Setups
+    
+    func setupUI() {
+        
+        self.centerOfImageView = self.imageView.center
+        self.likeIcon.alpha = 0
+        self.nopeIcon.alpha = 0
         
     }
     
