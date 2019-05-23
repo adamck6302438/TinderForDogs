@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString * clientID;
 @property (strong, nonatomic) NSString * clientSecret;
 @property (strong, nonatomic) NSString * accessToken;
+@property (assign, nonatomic) NSInteger currentPage;
 
 -(void)fetchAccessToken;
 
