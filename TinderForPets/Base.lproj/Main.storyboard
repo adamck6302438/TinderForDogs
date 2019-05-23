@@ -85,9 +85,6 @@
                                                         <integer key="value" value="30"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <outletCollection property="gestureRecognizers" destination="mmv-Qq-HBg" appends="YES" id="jab-m3-LWm"/>
-                                                </connections>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Zh4-lb-iwP" userLabel="metadataStackView">
                                                 <rect key="frame" x="20" y="545.5" width="374" height="58.5"/>
@@ -123,6 +120,9 @@
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="like" translatesAutoresizingMaskIntoConstraints="NO" id="PQP-h6-Poo">
                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                             </imageView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="superlike" translatesAutoresizingMaskIntoConstraints="NO" id="tzC-4Y-1wX">
+                                                <rect key="frame" x="57" y="162" width="300" height="300"/>
+                                            </imageView>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="Zh4-lb-iwP" secondAttribute="bottom" constant="20" id="7LI-yh-Liv"/>
@@ -134,11 +134,16 @@
                                             <constraint firstItem="06A-dg-hEp" firstAttribute="top" secondItem="OTL-SY-LIO" secondAttribute="top" id="bDp-BG-nMF"/>
                                             <constraint firstItem="06A-dg-hEp" firstAttribute="centerX" secondItem="OTL-SY-LIO" secondAttribute="centerX" id="i3p-Nz-hlH"/>
                                             <constraint firstAttribute="bottom" secondItem="06A-dg-hEp" secondAttribute="bottom" id="kYo-XE-SUY"/>
+                                            <constraint firstItem="tzC-4Y-1wX" firstAttribute="centerY" secondItem="OTL-SY-LIO" secondAttribute="centerY" id="lHA-9P-pqo"/>
                                             <constraint firstItem="06A-dg-hEp" firstAttribute="centerY" secondItem="OTL-SY-LIO" secondAttribute="centerY" id="oPX-yn-ug3"/>
                                             <constraint firstItem="PQP-h6-Poo" firstAttribute="leading" secondItem="OTL-SY-LIO" secondAttribute="leading" id="pze-dH-ham"/>
                                             <constraint firstAttribute="trailing" secondItem="Cbr-Jk-3GJ" secondAttribute="trailing" id="usG-IZ-Jt5"/>
+                                            <constraint firstItem="tzC-4Y-1wX" firstAttribute="centerX" secondItem="OTL-SY-LIO" secondAttribute="centerX" id="wma-TU-a8X"/>
                                             <constraint firstItem="Zh4-lb-iwP" firstAttribute="leading" secondItem="OTL-SY-LIO" secondAttribute="leading" constant="20" id="wxI-8l-Htb"/>
                                         </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="mmv-Qq-HBg" appends="YES" id="KcX-Wn-Cpi"/>
+                                        </connections>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="79r-gi-xnF" userLabel="bottomButtonStackView">
                                         <rect key="frame" x="0.0" y="693.5" width="414" height="138.5"/>
@@ -153,6 +158,9 @@
                                                             <constraint firstAttribute="height" constant="50" id="riN-Ds-BhX"/>
                                                         </constraints>
                                                         <state key="normal" title="Button" image="x"/>
+                                                        <connections>
+                                                            <action selector="nopeTapped:" destination="ENU-ND-eWK" eventType="touchUpInside" id="4Zk-qx-SYI"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -170,6 +178,9 @@
                                                             <constraint firstAttribute="width" constant="60" id="vqT-Yv-NQV"/>
                                                         </constraints>
                                                         <state key="normal" image="star2"/>
+                                                        <connections>
+                                                            <action selector="superliketapped:" destination="ENU-ND-eWK" eventType="touchUpInside" id="sQa-xi-3UY"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -187,6 +198,9 @@
                                                             <constraint firstAttribute="width" constant="55" id="ZtG-Vp-ZvM"/>
                                                         </constraints>
                                                         <state key="normal" image="heart"/>
+                                                        <connections>
+                                                            <action selector="likeTapped:" destination="ENU-ND-eWK" eventType="touchUpInside" id="wTZ-gV-XOI"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -217,8 +231,12 @@
                         <outlet property="filterView" destination="a4k-Q3-4Xh" id="0Pd-tf-c78"/>
                         <outlet property="imageView" destination="06A-dg-hEp" id="p2n-Qq-qu7"/>
                         <outlet property="imageViewContainer" destination="OTL-SY-LIO" id="NP6-aY-SkJ"/>
+                        <outlet property="likeButton" destination="uNV-LF-rQJ" id="ABK-L3-3hj"/>
                         <outlet property="likeIcon" destination="PQP-h6-Poo" id="HsM-DT-arO"/>
+                        <outlet property="nopeButton" destination="QQv-i7-Kdd" id="LRF-im-mul"/>
                         <outlet property="nopeIcon" destination="Cbr-Jk-3GJ" id="rLo-a5-Z7D"/>
+                        <outlet property="superlikeButton" destination="qWe-js-2C3" id="YNZ-8a-Utw"/>
+                        <outlet property="superlikeIcon" destination="tzC-4Y-1wX" id="rNB-KJ-JLe"/>
                         <outlet property="tableView" destination="3fL-4z-LPY" id="bLB-y7-qVE"/>
                     </connections>
                 </viewController>
@@ -414,6 +432,7 @@
         <image name="nope" width="300" height="300"/>
         <image name="star2" width="300" height="300"/>
         <image name="startnocircle" width="300" height="300"/>
+        <image name="superlike" width="300" height="300"/>
         <image name="x" width="300" height="300"/>
     </resources>
 </document>
