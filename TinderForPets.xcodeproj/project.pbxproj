@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D84C69822970D3400499964 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D84C69722970D3400499964 /* DetailViewController.swift */; };
+		0D84C69A22970D4A00499964 /* DetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D84C69922970D4A00499964 /* DetailCollectionViewCell.swift */; };
 		784055AC2296F82400584C04 /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784055AB2296F82400584C04 /* Dog.swift */; };
 		784055B02297033400584C04 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784055AF2297033400584C04 /* User.swift */; };
 		784311802295FF4E000F3500 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7843117F2295FF4E000F3500 /* NetworkManager.m */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D84C69722970D3400499964 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		0D84C69922970D4A00499964 /* DetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		784055AB2296F82400584C04 /* Dog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
 		784055AF2297033400584C04 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7843117D2295FF4D000F3500 /* TinderForPets-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TinderForPets-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -76,6 +80,8 @@
 				7843117D2295FF4D000F3500 /* TinderForPets-Bridging-Header.h */,
 				784055AB2296F82400584C04 /* Dog.swift */,
 				784055AF2297033400584C04 /* User.swift */,
+				0D84C69722970D3400499964 /* DetailViewController.swift */,
+				0D84C69922970D4A00499964 /* DetailCollectionViewCell.swift */,
 			);
 			path = TinderForPets;
 			sourceTree = "<group>";
@@ -155,9 +161,11 @@
 				784311802295FF4E000F3500 /* NetworkManager.m in Sources */,
 				78844AF92295F06700D2444D /* ViewController.swift in Sources */,
 				784055B02297033400584C04 /* User.swift in Sources */,
+				0D84C69A22970D4A00499964 /* DetailCollectionViewCell.swift in Sources */,
 				78844AF72295F06700D2444D /* AppDelegate.swift in Sources */,
 				784055AC2296F82400584C04 /* Dog.swift in Sources */,
 				78844AFF2295F06700D2444D /* TinderForPets.xcdatamodeld in Sources */,
+				0D84C69822970D3400499964 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
