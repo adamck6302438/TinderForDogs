@@ -14,6 +14,7 @@
 		78844AFF2295F06700D2444D /* TinderForPets.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 78844AFD2295F06700D2444D /* TinderForPets.xcdatamodeld */; };
 		78844B012295F06700D2444D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78844B002295F06700D2444D /* Assets.xcassets */; };
 		78844B042295F06700D2444D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78844B022295F06700D2444D /* LaunchScreen.storyboard */; };
+		ED115DAC2296E96300C9FB71 /* DetailCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED115DAB2296E96300C9FB71 /* DetailCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		78844B002295F06700D2444D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		78844B032295F06700D2444D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		78844B052295F06700D2444D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ED115DAB2296E96300C9FB71 /* DetailCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				78844AF62295F06700D2444D /* AppDelegate.swift */,
 				78844AF82295F06700D2444D /* ViewController.swift */,
 				78844AFA2295F06700D2444D /* Main.storyboard */,
+				ED115DAB2296E96300C9FB71 /* DetailCollectionViewController.swift */,
 				78844B002295F06700D2444D /* Assets.xcassets */,
 				78844B022295F06700D2444D /* LaunchScreen.storyboard */,
 				78844B052295F06700D2444D /* Info.plist */,
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				784311802295FF4E000F3500 /* NetworkManager.m in Sources */,
+				ED115DAC2296E96300C9FB71 /* DetailCollectionViewController.swift in Sources */,
 				78844AF92295F06700D2444D /* ViewController.swift in Sources */,
 				78844AF72295F06700D2444D /* AppDelegate.swift in Sources */,
 				78844AFF2295F06700D2444D /* TinderForPets.xcdatamodeld in Sources */,
