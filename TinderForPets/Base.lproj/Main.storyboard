@@ -299,10 +299,10 @@
             </objects>
             <point key="canvasLocation" x="1352.1739130434785" y="107.8125"/>
         </scene>
-        <!--View Controller-->
+        <!--Detail View Controller-->
         <scene sceneID="k5D-Ng-eUR">
             <objects>
-                <viewController id="VPl-KC-sSx" sceneMemberID="viewController">
+                <viewController id="VPl-KC-sSx" customClass="DetailViewController" customModule="TinderForPets" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="k6O-RY-viQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -317,7 +317,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Oaz-9M-Ehs">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="favourite" id="Oaz-9M-Ehs" customClass="DetailCollectionViewCell" customModule="TinderForPets" customModuleProvider="target">
                                         <rect key="frame" x="69" y="50" width="276" height="348"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -378,12 +378,24 @@
                                             <constraint firstAttribute="bottom" secondItem="wUA-LC-ZGZ" secondAttribute="bottom" id="qY4-Yf-2Vw"/>
                                             <constraint firstItem="wUA-LC-ZGZ" firstAttribute="leading" secondItem="Oaz-9M-Ehs" secondAttribute="leading" constant="8" id="yaQ-1b-5Ez"/>
                                         </constraints>
+                                        <connections>
+                                            <outlet property="ageLabel" destination="IM5-Me-L93" id="GsU-Tr-nYl"/>
+                                            <outlet property="breedLabel" destination="NId-eI-i7U" id="KYI-cT-re0"/>
+                                            <outlet property="distanceLabel" destination="0bo-qS-t2Y" id="DE5-eC-j3U"/>
+                                            <outlet property="genderLabel" destination="9lI-lb-tWU" id="IQR-Pu-6eM"/>
+                                            <outlet property="imageView" destination="LjT-DX-JnO" id="Ifg-tg-Y8f"/>
+                                            <outlet property="nameLabel" destination="Qq3-pw-Bmp" id="9qL-Ai-QQ5"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="mOc-wM-RT7" userLabel="TitleReusableView">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </collectionReusableView>
+                                <connections>
+                                    <outlet property="dataSource" destination="VPl-KC-sSx" id="t5Q-uv-LSo"/>
+                                    <outlet property="delegate" destination="VPl-KC-sSx" id="T3J-CE-PXu"/>
+                                </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vyJ-95-uwa">
                                 <rect key="frame" x="0.0" y="44" width="414" height="60"/>

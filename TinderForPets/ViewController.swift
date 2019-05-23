@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var superlikeButton: UIButton!
     
-    var networkManger = NetworkManager()
+    
     var filterSizes = [(name: String, isSelected: Bool)]()
     var filterGenders = [(name: String, isSelected: Bool)]()
     var filterAges = [(name: String, isSelected: Bool)]()
@@ -33,8 +33,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         setupFilterArrays()
+        NetworkManager.shared().fetchAccessToken()
+        self.centerOfImageView = self.imageView.center
         setupUI()
-        networkManger.fetchAccessToken()
         
         
     }
@@ -98,11 +99,13 @@ class ViewController: UIViewController {
                 
             } else {
                 UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
+                    
                     self.self.imageViewContainer.center = CGPoint(x: self.view.center.x, y: self.centerOfImageView.y)
                     self.self.imageViewContainer.transform = CGAffineTransform(rotationAngle: 0)
                     self.nopeIcon.alpha = 0
                     self.likeIcon.alpha = 0
                     self.superlikeIcon.alpha = 0
+                    
                 }, completion: nil)
             }
         default:
@@ -113,12 +116,14 @@ class ViewController: UIViewController {
     func showNextCard() {
         //TODO: Need to have more than 1 imageView on screen @ once.
         // Need to setup next card while current card is on screen.
+        
         self.nopeIcon.alpha = 0
-         self.likeIcon.alpha = 0
+        self.likeIcon.alpha = 0
         self.superlikeIcon.alpha = 0
         
         self.imageViewContainer.center = CGPoint(x: self.view.center.x, y: self.centerOfImageView.y)
         self.imageViewContainer.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+        
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
             self.imageViewContainer.transform = CGAffineTransform(scaleX: 1, y: 1)
@@ -155,7 +160,7 @@ class ViewController: UIViewController {
         UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
             self.self.imageViewContainer.center = CGPoint(x: self.view.frame.maxX * 1.5, y: self.view.center.y)
             self.self.imageViewContainer.transform = CGAffineTransform(rotationAngle: 0)
-           
+            
         }) { (complete) in
             if complete {
                 self.showNextCard()
@@ -166,7 +171,7 @@ class ViewController: UIViewController {
     func superlike() {
         
         UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
-             self.self.imageViewContainer.center = CGPoint(x: self.view.center.x, y: self.view.frame.maxY * -1.5)
+            self.self.imageViewContainer.center = CGPoint(x: self.view.center.x, y: self.view.frame.maxY * -1.5)
             self.self.imageViewContainer.transform = CGAffineTransform(rotationAngle: 0)
             
         }) { (complete) in
@@ -249,7 +254,7 @@ class ViewController: UIViewController {
         }){ (_) in
             self.superlike()
         };
-
+        
         
         
     }
