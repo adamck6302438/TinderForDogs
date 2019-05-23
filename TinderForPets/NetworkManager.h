@@ -12,6 +12,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NetworkManager : NSObject
 
+@property (strong, nonatomic) NSString * clientID;
+@property (strong, nonatomic) NSString * clientSecret;
+@property (strong, nonatomic) NSString * accessToken;
+
+-(void)fetchAccessToken;
+
 @end
 
 NS_ASSUME_NONNULL_END
