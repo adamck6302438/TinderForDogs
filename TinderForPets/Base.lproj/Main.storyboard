@@ -388,20 +388,25 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vyJ-95-uwa">
                                 <rect key="frame" x="0.0" y="44" width="414" height="60"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Je-D7-al8">
-                                        <rect key="frame" x="8" y="8" width="46" height="44"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Je-D7-al8">
+                                        <rect key="frame" x="8" y="8" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="H4D-19-2he"/>
+                                            <constraint firstAttribute="width" constant="44" id="cyE-5i-fTp"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="fuJ-rW-s8e"/>
                                         </constraints>
-                                        <state key="normal" title="Button"/>
+                                        <state key="normal" title="Button" image="BACK"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="7wE-zc-APH"/>
                                     <constraint firstItem="1Je-D7-al8" firstAttribute="top" secondItem="vyJ-95-uwa" secondAttribute="top" constant="8" id="Bmq-Ka-udJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="1Je-D7-al8" secondAttribute="bottom" constant="8" id="Evk-Qv-Gg0"/>
+                                    <constraint firstItem="1Je-D7-al8" firstAttribute="leading" secondItem="vyJ-95-uwa" secondAttribute="leading" constant="8" id="OsD-ML-11X"/>
                                     <constraint firstAttribute="bottom" secondItem="1Je-D7-al8" secondAttribute="bottom" constant="8" id="SGE-6V-jMj"/>
                                     <constraint firstItem="1Je-D7-al8" firstAttribute="leading" secondItem="vyJ-95-uwa" secondAttribute="leading" constant="8" id="W9V-vM-eKl"/>
+                                    <constraint firstItem="1Je-D7-al8" firstAttribute="top" secondItem="vyJ-95-uwa" secondAttribute="top" constant="8" id="s5t-0r-bGu"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -425,6 +430,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="BACK" width="300" height="300"/>
         <image name="filter" width="300" height="300"/>
         <image name="heart" width="300" height="300"/>
         <image name="il_794xN.1525391545_2uoc" width="794" height="1185"/>
