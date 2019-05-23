@@ -39,15 +39,19 @@
         NSError *jsonError = nil;
         NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
         self.accessToken = jsonResponse[@"access_token"];
-        //TODO: Make another network call using this access token.
+        NSLog(@"accesToken is : %@", self.accessToken);
+        [self fetchDogData];
     }];
     
     [dataTask resume];
 }
 
--(void)fetchDogDataWithCompletionHandler:(nonnull void (^)(NSArray * _Nonnull))complete {
-    NSMutableArray* arrayToReturn = [@[] mutableCopy];
-
+-(void)fetchDogData {
+    
+    if (!self.currentPage) {
+        self.currentPage = 1;
+    }
+    
     NSString * urlString = [NSString stringWithFormat:@"https://api.petfinder.com/v2/animals?type=dog&page=%ld",(long)self.currentPage];
     NSURL *url = [NSURL URLWithString:urlString];
 
@@ -76,13 +80,43 @@
 
         for (NSDictionary *dogDictionary in dogs) {
             Dog * dog = [Dog initWithJSONWithJson:dogDictionary];
-            [arrayToReturn addObject:dog];
+            if (dog != nil) {
+                User.shared.allDogs = [User.shared.allDogs arrayByAddingObject:dog];
+            }
         }
         
-        complete(arrayToReturn);
+        
+        
     }];
 
     [dataTask resume];
+}
+
+-(void)fetchImageForDog: (Dog *)dog {
+    NSURL *url = [NSURL URLWithString:dog.imageURL];
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
+    
+    NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithURL:url completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"error: %@", error.localizedDescription);
+            return;
+        }
+        dog.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
+    }];
+    [downloadTask resume];
+}
+
+#define SINGLETON_FOR_CLASS(NetworkManager)
++ (NetworkManager *) shared {
+    static dispatch_once_t pred = 0;
+    static id _sharedObject = nil;
+    dispatch_once(&pred, ^{
+        _sharedObject = [[self alloc] init];
+    });
+    return _sharedObject;
 }
 
 

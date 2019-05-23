@@ -7,8 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class Dog;
 
 @interface NetworkManager : NSObject
 
@@ -16,8 +19,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString * clientSecret;
 @property (strong, nonatomic) NSString * accessToken;
 @property (assign, nonatomic) NSInteger currentPage;
+@property (strong, nonatomic) CLLocationManager * locationManager;
 
 -(void)fetchAccessToken;
+-(void)fetchImageForDog: (Dog *)dog;
++ (NetworkManager *) shared;
 
 @end
 

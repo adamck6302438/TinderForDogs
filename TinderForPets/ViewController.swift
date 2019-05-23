@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageViewContainer: UIView!
     
-    var networkManger = NetworkManager()
+    
     var filterSizes = [(name: String, isSelected: Bool)]()
     var filterGenders = [(name: String, isSelected: Bool)]()
     var filterAges = [(name: String, isSelected: Bool)]()
@@ -25,7 +25,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupFilterArrays()
-        networkManger.fetchAccessToken()
+        NetworkManager.shared().fetchAccessToken()
         self.centerOfImageView = self.imageView.center
     }
     
@@ -49,7 +49,7 @@ class ViewController: UIViewController {
             let angleMultiplier = (self.imageView.center.x - view.center.x) / (view.frame.maxX / 2)
             let angle: CGFloat = (10.0 * .pi / 180) * angleMultiplier
             self.imageView.transform = CGAffineTransform(rotationAngle: angle)
-            self.self.imageView.center = CGPoint(x: self.centerOfImageView.x + translation.x, y: self.centerOfImageView.y + translation.y)
+            self.self.imageView.center = CGPoint(x: self.view.center.x + translation.x, y: self.centerOfImageView.y + translation.y)
         case .ended:
             let distanceFromCenterX = (self.imageView.center.x - view.center.x) / view.frame.maxX
             if distanceFromCenterX < -0.25 {
@@ -72,7 +72,7 @@ class ViewController: UIViewController {
                 }
             } else {
                 UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
-                    self.self.imageView.center = CGPoint(x: self.centerOfImageView.x, y: self.centerOfImageView.y)
+                    self.self.imageView.center = CGPoint(x: self.view.center.x, y: self.centerOfImageView.y)
                     self.self.imageView.transform = CGAffineTransform(rotationAngle: 0)
                 }, completion: nil)
             }
@@ -84,7 +84,7 @@ class ViewController: UIViewController {
     func showNextCard() {
         //TODO: Need to have more than 1 imageView on screen @ once.
         // Need to setup next card while current card is on screen.
-        self.imageView.center = CGPoint(x: self.centerOfImageView.x, y: self.centerOfImageView.y)
+        self.imageView.center = CGPoint(x: self.view.center.x, y: self.centerOfImageView.y)
         self.imageView.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
