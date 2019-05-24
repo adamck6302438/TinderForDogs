@@ -20,14 +20,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var nopeButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var superlikeButton: UIButton!
+    @IBOutlet var panRecog: UIPanGestureRecognizer!
     
-    var currenCard = true
-    
-    
-
-    
-    
-    
+    var currentContainer: ContainerView!
     var filterSizes = [(name: String, isSelected: Bool)]()
     var filterGenders = [(name: String, isSelected: Bool)]()
     var filterAges = [(name: String, isSelected: Bool)]()
@@ -39,7 +34,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupFilterArrays()
         NetworkManager.shared().fetchAccessToken()
-        
+        setupCards()
+
     }
     
     override func viewDidLayoutSubviews() {
@@ -65,30 +61,30 @@ class ViewController: UIViewController {
         
         switch sender.state {
         case .changed:
-            let angleMultiplier = (self.imageViewContainer.center.x - view.center.x) / (view.frame.maxX / 2)
+            let angleMultiplier = (self.currentContainer.center.x - view.center.x) / (view.frame.maxX / 2)
             let angle: CGFloat = (10.0 * .pi / 180) * angleMultiplier
-            self.imageViewContainer.transform = CGAffineTransform(rotationAngle: angle)
-            self.self.imageViewContainer.center = CGPoint(x: self.view.center.x + translation.x, y: self.centerOfImageView.y + translation.y)
+            self.currentContainer.transform = CGAffineTransform(rotationAngle: angle)
+            self.self.currentContainer.center = CGPoint(x: self.view.center.x + translation.x, y: self.centerOfImageView.y + translation.y)
             
             if translation.x < -(view.frame.maxX * 0.1) {
-                self.imageViewContainer.nopeIcon.alpha = -(translation.x/200.0)
-                self.imageViewContainer.likeIcon.alpha = 0
-                self.imageViewContainer.superlikeIcon.alpha = 0
+                self.currentContainer.nopeIcon.alpha = -(translation.x/200.0)
+                self.currentContainer.likeIcon.alpha = 0
+                self.currentContainer.superlikeIcon.alpha = 0
             } else if translation.x > (view.frame.maxX * 0.1){
-                self.imageViewContainer.likeIcon.alpha = translation.x/200.0
-                self.imageViewContainer.nopeIcon.alpha = 0
-                self.imageViewContainer.superlikeIcon.alpha = 0
+                self.currentContainer.likeIcon.alpha = translation.x/200.0
+                self.currentContainer.nopeIcon.alpha = 0
+                self.currentContainer.superlikeIcon.alpha = 0
             }
             
             if translation.y < -(view.frame.maxY * 0.1) && translation.x > -(view.frame.maxX * 0.1) && translation.x < (view.frame.maxX * 0.1) {
-                self.imageViewContainer.superlikeIcon.alpha = -(translation.y/350.0)
-                self.imageViewContainer.likeIcon.alpha = 0
-                self.imageViewContainer.nopeIcon.alpha = 0
+                self.currentContainer.superlikeIcon.alpha = -(translation.y/350.0)
+                self.currentContainer.likeIcon.alpha = 0
+                self.currentContainer.nopeIcon.alpha = 0
             }
             
         case .ended:
-            let distanceFromCenterX = (self.imageViewContainer.center.x - view.center.x) / view.frame.maxX
-            let distanceFromCenterY = (self.imageViewContainer.center.y - view.center.y) / view.frame.maxY
+            let distanceFromCenterX = (self.currentContainer.center.x - view.center.x) / view.frame.maxX
+            let distanceFromCenterY = (self.currentContainer.center.y - view.center.y) / view.frame.maxY
             
             if distanceFromCenterX < -0.25 {
                 
@@ -104,11 +100,11 @@ class ViewController: UIViewController {
                 
             } else {
                 UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
-                    self.imageViewContainer.center = CGPoint(x: self.view.center.x, y:self.centerOfImageView.y)
-                    self.imageViewContainer.transform = CGAffineTransform(rotationAngle: 0)
-                    self.imageViewContainer.nopeIcon.alpha = 0
-                    self.imageViewContainer.likeIcon.alpha = 0
-                    self.imageViewContainer.superlikeIcon.alpha = 0
+                    self.currentContainer.center = CGPoint(x: self.view.center.x, y:self.centerOfImageView.y)
+                    self.currentContainer.transform = CGAffineTransform(rotationAngle: 0)
+                    self.currentContainer.nopeIcon.alpha = 0
+                    self.currentContainer.likeIcon.alpha = 0
+                    self.currentContainer.superlikeIcon.alpha = 0
                     
                 }, completion: nil)
             }
@@ -121,29 +117,42 @@ class ViewController: UIViewController {
         //TODO: Need to have more than 1 imageView on screen @ once.
         // Need to setup next card while current card is on screen.
         
-        self.imageViewContainer.nopeIcon.alpha = 0
-        self.imageViewContainer.likeIcon.alpha = 0
-        self.imageViewContainer.superlikeIcon.alpha = 0
+        self.currentContainer.nopeIcon.alpha = 0
+        self.currentContainer.likeIcon.alpha = 0
+        self.currentContainer.superlikeIcon.alpha = 0
         
-        self.imageViewContainer.center = CGPoint(x: self.view.center.x, y: self.centerOfImageView.y)
-        self.imageViewContainer.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+        self.currentContainer.center = CGPoint(x: self.view.center.x, y: self.centerOfImageView.y)
+        self.currentContainer.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
         
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
-            self.imageViewContainer.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.currentContainer.transform = CGAffineTransform(scaleX: 1, y: 1)
         }, completion: nil)
+        
         self.nopeButton.isEnabled = true
         self.likeButton.isEnabled = true
         self.superlikeButton.isEnabled = true
         
-        if currenCard {
+        if  self.currentContainer == imageViewContainer  {
             self.view.insertSubview(self.imageViewContainer, belowSubview: self.nextImageViewContainer)
-            self.nextImageViewContainer.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            currenCard = !currenCard
+            UIView.animate(withDuration: 0.1) {
+                self.nextImageViewContainer.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                self.imageViewContainer.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            }
+            
+            
+            self.imageViewContainer.removeGestureRecognizer(panRecog)
+            self.nextImageViewContainer.addGestureRecognizer(panRecog)
+            self.currentContainer = nextImageViewContainer
         } else {
-            self.view.insertSubview(self.imageViewContainer, aboveSubview: self.nextImageViewContainer)
-            self.imageViewContainer.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            currenCard = !currenCard
+            self.view.insertSubview(self.nextImageViewContainer, belowSubview: self.imageViewContainer)
+            UIView.animate(withDuration: 0.1) {
+                self.imageViewContainer.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                self.nextImageViewContainer.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            }
+            self.nextImageViewContainer.removeGestureRecognizer(panRecog)
+            self.imageViewContainer.addGestureRecognizer(panRecog)
+            self.currentContainer = imageViewContainer
         }
         
 
@@ -162,9 +171,9 @@ class ViewController: UIViewController {
     }
     
     func nope() {
-        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
-            self.self.imageViewContainer.center = CGPoint(x: self.view.frame.maxX * -1.5, y: self.view.center.y)
-            self.self.imageViewContainer.transform = CGAffineTransform(rotationAngle: 0)
+        UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
+            self.self.currentContainer.center = CGPoint(x: self.view.frame.maxX * -1.5, y: self.view.center.y)
+            self.self.currentContainer.transform = CGAffineTransform(rotationAngle: 0)
             
         }) { (complete) in
             if complete {
@@ -175,9 +184,9 @@ class ViewController: UIViewController {
     }
     
     func like() {
-        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
-            self.self.imageViewContainer.center = CGPoint(x: self.view.frame.maxX * 1.5, y: self.view.center.y)
-            self.self.imageViewContainer.transform = CGAffineTransform(rotationAngle: 0)
+        UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
+            self.self.currentContainer.center = CGPoint(x: self.view.frame.maxX * 1.5, y: self.view.center.y)
+            self.self.currentContainer.transform = CGAffineTransform(rotationAngle: 0)
             
         }) { (complete) in
             if complete {
@@ -190,29 +199,19 @@ class ViewController: UIViewController {
     }
     
     func superlike() {
-//
-//        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
-//            self.self.imageViewContainer.center = CGPoint(x: self.view.center.x, y: self.view.frame.maxY * -1.5)
-//            self.self.imageViewContainer.transform = CGAffineTransform(rotationAngle: 0)
-//
-//        }) { (complete) in
-//            if complete {
-//                self.showNextCard()
-//            }
-//        }
-//
-//        fetchMoreDogs()
 
-        
-        
-        self.imageViewContainer.removeFromSuperview()
-        self.view.addSubview(nextImageViewContainer)
+        UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
+            self.self.currentContainer.center = CGPoint(x: self.view.center.x, y: self.view.frame.maxY * -1.5)
+            self.self.currentContainer.transform = CGAffineTransform(rotationAngle: 0)
 
-        NSLayoutConstraint.activate(self.nextImageViewContainer.constraints)
-        self.nextImageViewContainer.setNeedsLayout()
-        
+        }) { (complete) in
+            if complete {
+                self.showNextCard()
+            }
+        }
 
-        
+        fetchMoreDogs()
+
     }
     
     func fetchMoreDogs() {
@@ -225,15 +224,17 @@ class ViewController: UIViewController {
     
     //MARK: Setups
     
+    func setupCards()  {
+        self.imageViewContainer.setAlphaZero()
+        self.nextImageViewContainer.setAlphaZero()
+        self.currentContainer = imageViewContainer
+        self.nextImageViewContainer.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+    }
+    
     func setupUI() {
         
-        let scale = CGFloat.init(0.9)
-        self.nextImageViewContainer.transform = CGAffineTransform(scaleX: scale, y: scale)
         self.centerOfImageView = self.imageViewContainer.center
-        self.imageViewContainer.likeIcon.alpha = 0
-        self.imageViewContainer.nopeIcon.alpha = 0
-        self.imageViewContainer.superlikeIcon.alpha = 0
-        
+
     }
     
     func setupFilterView() {
@@ -273,11 +274,11 @@ class ViewController: UIViewController {
     
     @IBAction func nopeTapped(_ sender: UIButton) {
         buttonIsEnable()
-        self.imageViewContainer.nopeIcon.alpha = 1
+        self.currentContainer.nopeIcon.alpha = 1
         UIView.animate(withDuration: 0.5,delay: 0.1,animations: {
             let angle: CGFloat = (10.0 * .pi / -180)
-            self.imageViewContainer.transform = CGAffineTransform(rotationAngle: angle)
-            self.self.imageViewContainer.center = CGPoint(x: self.view.center.x - 450, y: self.centerOfImageView.y - 250)
+            self.currentContainer.transform = CGAffineTransform(rotationAngle: angle)
+            self.self.currentContainer.center = CGPoint(x: self.view.center.x - 450, y: self.centerOfImageView.y - 250)
             
         }){ (_) in
             self.nope()
@@ -289,9 +290,9 @@ class ViewController: UIViewController {
     @IBAction func superliketapped(_ sender: UIButton) {
         
         buttonIsEnable()
-        self.imageViewContainer.superlikeIcon.alpha = 1
+        self.currentContainer.superlikeIcon.alpha = 1
         UIView.animate(withDuration: 0.5,delay: 0.1 ,animations: {
-            self.self.imageViewContainer.center = CGPoint(x: self.view.center.x, y: self.centerOfImageView.y - 800)
+            self.self.currentContainer.center = CGPoint(x: self.view.center.x, y: self.centerOfImageView.y - 800)
         }){ (_) in
             self.superlike()
         };
@@ -300,12 +301,12 @@ class ViewController: UIViewController {
         
     }
     @IBAction func likeTapped(_ sender: Any) {
-        self.imageViewContainer.likeIcon.alpha = 1
+        self.currentContainer.likeIcon.alpha = 1
         buttonIsEnable()
         UIView.animate(withDuration: 0.5,delay: 0.1 ,animations: {
             let angle: CGFloat = (10.0 * .pi / 180)
-            self.imageViewContainer.transform = CGAffineTransform(rotationAngle: angle)
-            self.self.imageViewContainer.center = CGPoint(x: self.view.center.x + 450, y: self.centerOfImageView.y - 250)
+            self.currentContainer.transform = CGAffineTransform(rotationAngle: angle)
+            self.self.currentContainer.center = CGPoint(x: self.view.center.x + 450, y: self.centerOfImageView.y - 250)
         }){ (_) in
             self.like()
         };
