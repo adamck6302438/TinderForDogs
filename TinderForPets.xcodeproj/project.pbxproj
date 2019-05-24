@@ -19,6 +19,7 @@
 		78844AFF2295F06700D2444D /* TinderForPets.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 78844AFD2295F06700D2444D /* TinderForPets.xcdatamodeld */; };
 		78844B012295F06700D2444D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78844B002295F06700D2444D /* Assets.xcassets */; };
 		78844B042295F06700D2444D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78844B022295F06700D2444D /* LaunchScreen.storyboard */; };
+		78B7DB3222984FA800F73818 /* Test.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78B7DB3022984FA800F73818 /* Test.storyboard */; };
 		ED948420229751FC007FAE15 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94841F229751FC007FAE15 /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		78844B002295F06700D2444D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		78844B032295F06700D2444D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		78844B052295F06700D2444D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		78B7DB3122984FA800F73818 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = TinderForPets/Base.lproj/Test.storyboard; sourceTree = "<group>"; };
 		ED94841F229751FC007FAE15 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,6 +74,7 @@
 		78844AF52295F06700D2444D /* TinderForPets */ = {
 			isa = PBXGroup;
 			children = (
+				78B7DB3022984FA800F73818 /* Test.storyboard */,
 				ED94841F229751FC007FAE15 /* LocationManager.swift */,
 				78844AF62295F06700D2444D /* AppDelegate.swift */,
 				78844AF82295F06700D2444D /* ViewController.swift */,
@@ -153,6 +156,7 @@
 			files = (
 				78844B042295F06700D2444D /* LaunchScreen.storyboard in Resources */,
 				78844B012295F06700D2444D /* Assets.xcassets in Resources */,
+				78B7DB3222984FA800F73818 /* Test.storyboard in Resources */,
 				78844AFC2295F06700D2444D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -194,6 +198,14 @@
 				78844B032295F06700D2444D /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		78B7DB3022984FA800F73818 /* Test.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				78B7DB3122984FA800F73818 /* Base */,
+			);
+			name = Test.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -321,7 +333,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = T8CYLBGX24;
+				DEVELOPMENT_TEAM = DTTK359L6E;
 				INFOPLIST_FILE = TinderForPets/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -342,7 +354,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = T8CYLBGX24;
+				DEVELOPMENT_TEAM = DTTK359L6E;
 				INFOPLIST_FILE = TinderForPets/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
