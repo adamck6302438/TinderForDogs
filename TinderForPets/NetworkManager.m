@@ -82,11 +82,10 @@
         for (NSDictionary *dogDictionary in dogs) {
             Dog * dog = [Dog initWithJSONWithJson:dogDictionary];
             if (dog != nil) {
-                NSLog(@"DB  raining dogs");
-                [self fetchImageForDog:dog];
                 User.shared.allDogs = [User.shared.allDogs arrayByAddingObject:dog];
             }
         }
+        
         [self.delegate didFetchDogs];
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [self.updateCardDelegate updateCardWithDogs];

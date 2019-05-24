@@ -22,7 +22,6 @@ class DetailViewController: UIViewController{
         super.viewDidLoad()
         favouriteArray.append(User.shared.superLiked)
         favouriteArray.append(User.shared.liked)
-        print("\(favouriteArray)")
     }
     
     @IBAction func back(_ sender: Any) {
