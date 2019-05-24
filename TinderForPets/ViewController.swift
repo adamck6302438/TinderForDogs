@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var nextImageView: UIImageView!
+    @IBOutlet weak var nextImageViewContainer: UIView!
     @IBOutlet weak var imageViewContainer: UIView!
     @IBOutlet weak var nopeIcon: UIImageView!
     @IBOutlet weak var likeIcon: UIImageView!
@@ -22,6 +22,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var superlikeButton: UIButton!
     @IBOutlet weak var masterStackView: UIStackView!
+
     
     
     
@@ -36,6 +37,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupFilterArrays()
         NetworkManager.shared().fetchAccessToken()
+      
+        
         
     }
     
@@ -172,18 +175,28 @@ class ViewController: UIViewController {
     }
     
     func superlike() {
+//
+//        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
+//            self.self.imageViewContainer.center = CGPoint(x: self.view.center.x, y: self.view.frame.maxY * -1.5)
+//            self.self.imageViewContainer.transform = CGAffineTransform(rotationAngle: 0)
+//
+//        }) { (complete) in
+//            if complete {
+//                self.showNextCard()
+//            }
+//        }
+//
+//        fetchMoreDogs()
+
         
-        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
-            self.self.imageViewContainer.center = CGPoint(x: self.view.center.x, y: self.view.frame.maxY * -1.5)
-            self.self.imageViewContainer.transform = CGAffineTransform(rotationAngle: 0)
-            
-        }) { (complete) in
-            if complete {
-                self.showNextCard()
-            }
-        }
         
-        fetchMoreDogs()
+        self.imageViewContainer.removeFromSuperview()
+        self.view.addSubview(nextImageViewContainer)
+
+        NSLayoutConstraint.activate(self.nextImageViewContainer.constraints)
+        self.nextImageViewContainer.setNeedsLayout()
+        
+
         
     }
     
