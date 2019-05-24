@@ -11,6 +11,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 @class Dog;
+
+@protocol NetworkManagerDelegate <NSObject>
+
+- (void)didFetchDogs;
+
+@end
+
 @protocol UpdateCardDelegate <NSObject>
 
 -(void)updateCardWithDogs;
@@ -26,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic) NSInteger currentPage;
 @property (strong, nonatomic) CLLocationManager * locationManager;
 @property (weak, nonatomic) id<UpdateCardDelegate> updateCardDelegate;
+@property (strong, nonatomic) id <NetworkManagerDelegate> delegate;
 
 -(void)fetchAccessToken;
 -(void)fetchImageForDog: (Dog *)dog;

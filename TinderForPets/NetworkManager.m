@@ -87,6 +87,7 @@
                 User.shared.allDogs = [User.shared.allDogs arrayByAddingObject:dog];
             }
         }
+        [self.delegate didFetchDogs];
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [self.updateCardDelegate updateCardWithDogs];
         }];

@@ -22,6 +22,7 @@ class DetailViewController: UIViewController{
         super.viewDidLoad()
         favouriteArray.append(User.shared.superLiked)
         favouriteArray.append(User.shared.liked)
+        print("\(favouriteArray)")
     }
     
     @IBAction func back(_ sender: Any) {
@@ -87,7 +88,7 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
         singleTap.numberOfTapsRequired = 1
         singleTap.require(toFail: doubleTap)
         cell.addGestureRecognizer(singleTap)
-
+        cell.setUpCell(dog: dog)
         return cell
     }
     

@@ -46,8 +46,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
         self.imageViewContainer.isHidden = true
         self.nextImageViewContainer.isHidden = true
         setupCards()
-//        updateDogCard()
-        
+        NetworkManager.shared().delegate = self
     }
 
     
@@ -61,6 +60,8 @@ class ViewController: UIViewController,UpdateCardDelegate {
                 self.filterView.removeFromSuperview()
             }
         }
+        
+        self.applyFilters()
     }
     
     
@@ -282,18 +283,53 @@ class ViewController: UIViewController,UpdateCardDelegate {
     }
     
     func setupFilterArrays() {
-        self.filterSizes.append((name: "Small", isSelected: false))
-        self.filterSizes.append((name: "Medium", isSelected: false))
-        self.filterSizes.append((name: "Large", isSelected: false))
-        self.filterSizes.append((name: "Extra Large", isSelected: false))
-        self.filterGenders.append((name: "Male", isSelected: false))
-        self.filterGenders.append((name: "Female", isSelected: false))
-        self.filterAges.append((name: "Baby", isSelected: false))
-        self.filterAges.append((name: "Young", isSelected: false))
-        self.filterAges.append((name: "Adult", isSelected: false))
+        self.filterSizes.append((name: "Small", isSelected: true))
+        self.filterSizes.append((name: "Medium", isSelected: true))
+        self.filterSizes.append((name: "Large", isSelected: true))
+        self.filterSizes.append((name: "Extra Large", isSelected: true))
+        self.filterGenders.append((name: "Male", isSelected: true))
+        self.filterGenders.append((name: "Female", isSelected: true))
+        self.filterAges.append((name: "Baby", isSelected: true))
+        self.filterAges.append((name: "Young", isSelected: true))
+        self.filterAges.append((name: "Adult", isSelected: true))
         self.filterSections = [self.filterSizes, self.filterGenders, self.filterAges]
         self.tableView.reloadData()
     }
+    
+    func applyFilters() {
+        
+        var desiredSizes = [String]()
+        var desiredAges = [String]()
+        var desiredGenders = [String]()
+        
+        
+        for size in self.filterSections[0] {
+            if size.isSelected {
+                desiredSizes.append(size.name.lowercased())
+            }
+        }
+        for gender in self.filterSections[1] {
+            if gender.isSelected {
+                desiredGenders.append(gender.name.lowercased())
+            }
+        }
+        for age in self.filterSections[2] {
+            if age.isSelected {
+                desiredAges.append(age.name.lowercased())
+            }
+        }
+        
+        User.shared.allDogs = User.shared.allDogs.filter { (dog) -> Bool in
+            return desiredGenders.contains(dog.gender) && desiredAges.contains(dog.age.rawValue) && desiredSizes.contains(dog.size.rawValue)
+        }
+        
+        if User.shared.allDogs.count < 5 {
+            NetworkManager.shared().fetchAccessToken() // This also fetches dogs.
+        }
+        
+        
+    }
+
     
     //MARK: IBActions
     
@@ -386,6 +422,13 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         self.tableView.reloadData()
     }
     
+    
+}
+
+extension ViewController : NetworkManagerDelegate {
+    func didFetchDogs() {
+        self.applyFilters()
+    }
     
 }
 
