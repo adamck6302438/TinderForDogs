@@ -51,7 +51,7 @@ enum DogAge: String {
         let id = String(idAsInt)
         guard let photos = json["photos"] as? [[String: Any]] else { return nil }
         guard let photosDict = photos.first else { return nil }
-        guard let imageURL = photosDict["full"] as? String else { return nil }
+        guard let imageURL = photosDict["large"] as? String else { return nil }
         guard let safariURL = json["url"] as? String else { return nil }
         guard let name = json["name"] as? String else { return nil }
         guard let breeds = json["breeds"] as? [String:Any] else { return nil }

@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var nextImageView: UIImageView!
     @IBOutlet weak var imageViewContainer: UIView!
     @IBOutlet weak var nopeIcon: UIImageView!
     @IBOutlet weak var likeIcon: UIImageView!
@@ -154,6 +155,7 @@ class ViewController: UIViewController {
                 self.showNextCard()
             }
         }
+        fetchMoreDogs()
     }
     
     func like() {
@@ -166,6 +168,7 @@ class ViewController: UIViewController {
                 self.showNextCard()
             }
         }
+        fetchMoreDogs()
     }
     
     func superlike() {
@@ -180,8 +183,15 @@ class ViewController: UIViewController {
             }
         }
         
+        fetchMoreDogs()
         
-        
+    }
+    
+    func fetchMoreDogs() {
+        if User.shared.allDogs.count < 5 {
+            NetworkManager.shared().currentPage += 1
+            NetworkManager.shared().fetchAccessToken()
+        }
     }
     
     
