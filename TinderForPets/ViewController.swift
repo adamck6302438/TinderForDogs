@@ -10,18 +10,20 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var superlikeIcon: UIImageView!
+
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var nextImageViewContainer: UIView!
-    @IBOutlet weak var imageViewContainer: UIView!
-    @IBOutlet weak var nopeIcon: UIImageView!
-    @IBOutlet weak var likeIcon: UIImageView!
+
+    @IBOutlet weak var nextImageViewContainer: ContainerView!
+    @IBOutlet weak var imageViewContainer: ContainerView!
+
     @IBOutlet weak var nopeButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var superlikeButton: UIButton!
-    @IBOutlet weak var masterStackView: UIStackView!
+    
+    var currenCard = true
+    
+    
 
     
     
@@ -37,8 +39,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupFilterArrays()
         NetworkManager.shared().fetchAccessToken()
-      
-        
         
     }
     
@@ -71,19 +71,19 @@ class ViewController: UIViewController {
             self.self.imageViewContainer.center = CGPoint(x: self.view.center.x + translation.x, y: self.centerOfImageView.y + translation.y)
             
             if translation.x < -(view.frame.maxX * 0.1) {
-                self.nopeIcon.alpha = -(translation.x/200.0)
-                self.likeIcon.alpha = 0
-                self.superlikeIcon.alpha = 0
+                self.imageViewContainer.nopeIcon.alpha = -(translation.x/200.0)
+                self.imageViewContainer.likeIcon.alpha = 0
+                self.imageViewContainer.superlikeIcon.alpha = 0
             } else if translation.x > (view.frame.maxX * 0.1){
-                self.likeIcon.alpha = translation.x/200.0
-                self.nopeIcon.alpha = 0
-                self.superlikeIcon.alpha = 0
+                self.imageViewContainer.likeIcon.alpha = translation.x/200.0
+                self.imageViewContainer.nopeIcon.alpha = 0
+                self.imageViewContainer.superlikeIcon.alpha = 0
             }
             
             if translation.y < -(view.frame.maxY * 0.1) && translation.x > -(view.frame.maxX * 0.1) && translation.x < (view.frame.maxX * 0.1) {
-                self.superlikeIcon.alpha = -(translation.y/350.0)
-                self.likeIcon.alpha = 0
-                self.nopeIcon.alpha = 0
+                self.imageViewContainer.superlikeIcon.alpha = -(translation.y/350.0)
+                self.imageViewContainer.likeIcon.alpha = 0
+                self.imageViewContainer.nopeIcon.alpha = 0
             }
             
         case .ended:
@@ -106,9 +106,9 @@ class ViewController: UIViewController {
                 UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
                     self.imageViewContainer.center = CGPoint(x: self.view.center.x, y:self.centerOfImageView.y)
                     self.imageViewContainer.transform = CGAffineTransform(rotationAngle: 0)
-                    self.nopeIcon.alpha = 0
-                    self.likeIcon.alpha = 0
-                    self.superlikeIcon.alpha = 0
+                    self.imageViewContainer.nopeIcon.alpha = 0
+                    self.imageViewContainer.likeIcon.alpha = 0
+                    self.imageViewContainer.superlikeIcon.alpha = 0
                     
                 }, completion: nil)
             }
@@ -121,9 +121,9 @@ class ViewController: UIViewController {
         //TODO: Need to have more than 1 imageView on screen @ once.
         // Need to setup next card while current card is on screen.
         
-        self.nopeIcon.alpha = 0
-        self.likeIcon.alpha = 0
-        self.superlikeIcon.alpha = 0
+        self.imageViewContainer.nopeIcon.alpha = 0
+        self.imageViewContainer.likeIcon.alpha = 0
+        self.imageViewContainer.superlikeIcon.alpha = 0
         
         self.imageViewContainer.center = CGPoint(x: self.view.center.x, y: self.centerOfImageView.y)
         self.imageViewContainer.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
@@ -135,6 +135,19 @@ class ViewController: UIViewController {
         self.nopeButton.isEnabled = true
         self.likeButton.isEnabled = true
         self.superlikeButton.isEnabled = true
+        
+        if currenCard {
+            self.view.insertSubview(self.imageViewContainer, belowSubview: self.nextImageViewContainer)
+            self.nextImageViewContainer.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            currenCard = !currenCard
+        } else {
+            self.view.insertSubview(self.imageViewContainer, aboveSubview: self.nextImageViewContainer)
+            self.imageViewContainer.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            currenCard = !currenCard
+        }
+        
+
+        
         
     }
     
@@ -172,6 +185,8 @@ class ViewController: UIViewController {
             }
         }
         fetchMoreDogs()
+        
+
     }
     
     func superlike() {
@@ -212,10 +227,12 @@ class ViewController: UIViewController {
     
     func setupUI() {
         
+        let scale = CGFloat.init(0.9)
+        self.nextImageViewContainer.transform = CGAffineTransform(scaleX: scale, y: scale)
         self.centerOfImageView = self.imageViewContainer.center
-        self.likeIcon.alpha = 0
-        self.nopeIcon.alpha = 0
-        self.superlikeIcon.alpha = 0
+        self.imageViewContainer.likeIcon.alpha = 0
+        self.imageViewContainer.nopeIcon.alpha = 0
+        self.imageViewContainer.superlikeIcon.alpha = 0
         
     }
     
@@ -256,7 +273,7 @@ class ViewController: UIViewController {
     
     @IBAction func nopeTapped(_ sender: UIButton) {
         buttonIsEnable()
-        self.nopeIcon.alpha = 1
+        self.imageViewContainer.nopeIcon.alpha = 1
         UIView.animate(withDuration: 0.5,delay: 0.1,animations: {
             let angle: CGFloat = (10.0 * .pi / -180)
             self.imageViewContainer.transform = CGAffineTransform(rotationAngle: angle)
@@ -270,8 +287,9 @@ class ViewController: UIViewController {
         
     }
     @IBAction func superliketapped(_ sender: UIButton) {
+        
         buttonIsEnable()
-        self.superlikeIcon.alpha = 1
+        self.imageViewContainer.superlikeIcon.alpha = 1
         UIView.animate(withDuration: 0.5,delay: 0.1 ,animations: {
             self.self.imageViewContainer.center = CGPoint(x: self.view.center.x, y: self.centerOfImageView.y - 800)
         }){ (_) in
@@ -282,7 +300,7 @@ class ViewController: UIViewController {
         
     }
     @IBAction func likeTapped(_ sender: Any) {
-        self.likeIcon.alpha = 1
+        self.imageViewContainer.likeIcon.alpha = 1
         buttonIsEnable()
         UIView.animate(withDuration: 0.5,delay: 0.1 ,animations: {
             let angle: CGFloat = (10.0 * .pi / 180)
