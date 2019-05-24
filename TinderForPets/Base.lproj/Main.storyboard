@@ -124,6 +124,7 @@
                                                 <rect key="frame" x="57" y="157" width="300" height="300"/>
                                             </imageView>
                                         </subviews>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="Zh4-lb-iwP" secondAttribute="bottom" constant="20" id="7LI-yh-Liv"/>
                                             <constraint firstItem="06A-dg-hEp" firstAttribute="leading" secondItem="OTL-SY-LIO" secondAttribute="leading" constant="8" id="CrQ-Ew-koh"/>
@@ -152,10 +153,10 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="132.5" height="136.5"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QQv-i7-Kdd">
-                                                        <rect key="frame" x="41.5" y="43.5" width="50" height="50"/>
+                                                        <rect key="frame" x="36.5" y="38.5" width="60" height="60"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="50" id="c6l-ui-0e6"/>
-                                                            <constraint firstAttribute="height" constant="50" id="riN-Ds-BhX"/>
+                                                            <constraint firstAttribute="width" constant="60" id="c6l-ui-0e6"/>
+                                                            <constraint firstAttribute="height" constant="60" id="riN-Ds-BhX"/>
                                                         </constraints>
                                                         <state key="normal" title="Button" image="x"/>
                                                         <connections>
@@ -172,12 +173,12 @@
                                                 <rect key="frame" x="140.5" y="0.0" width="133" height="136.5"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qWe-js-2C3">
-                                                        <rect key="frame" x="36.5" y="38.5" width="60" height="60"/>
+                                                        <rect key="frame" x="26.5" y="18.5" width="80" height="80"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="60" id="hfR-W2-F1G"/>
-                                                            <constraint firstAttribute="width" constant="60" id="vqT-Yv-NQV"/>
+                                                            <constraint firstAttribute="height" constant="80" id="hfR-W2-F1G"/>
+                                                            <constraint firstAttribute="width" constant="80" id="vqT-Yv-NQV"/>
                                                         </constraints>
-                                                        <state key="normal" image="star2"/>
+                                                        <state key="normal" image="star-1"/>
                                                         <connections>
                                                             <action selector="superliketapped:" destination="ENU-ND-eWK" eventType="touchUpInside" id="sQa-xi-3UY"/>
                                                         </connections>
@@ -185,17 +186,17 @@
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="qWe-js-2C3" firstAttribute="centerX" secondItem="bUo-3P-cac" secondAttribute="centerX" id="atY-ef-CxF"/>
-                                                    <constraint firstItem="qWe-js-2C3" firstAttribute="centerY" secondItem="bUo-3P-cac" secondAttribute="centerY" id="jqS-2G-PJo"/>
+                                                    <constraint firstItem="qWe-js-2C3" firstAttribute="centerY" secondItem="bUo-3P-cac" secondAttribute="centerY" constant="-10" id="jqS-2G-PJo"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LZG-Yt-9DB">
                                                 <rect key="frame" x="281.5" y="0.0" width="132.5" height="136.5"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uNV-LF-rQJ">
-                                                        <rect key="frame" x="38.5" y="41" width="55" height="55"/>
+                                                        <rect key="frame" x="36" y="38.5" width="60" height="60"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="55" id="MWL-B9-fwn"/>
-                                                            <constraint firstAttribute="width" constant="55" id="ZtG-Vp-ZvM"/>
+                                                            <constraint firstAttribute="height" constant="60" id="MWL-B9-fwn"/>
+                                                            <constraint firstAttribute="width" constant="60" id="ZtG-Vp-ZvM"/>
                                                         </constraints>
                                                         <state key="normal" image="heart"/>
                                                         <connections>
@@ -230,7 +231,8 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="0.98823529409999999" green="0.99215686270000003" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="upG-i1-bXC" firstAttribute="centerX" secondItem="1yc-uS-kUB" secondAttribute="centerX" id="1Ml-Ni-4qy"/>
                             <constraint firstItem="oXi-l9-fKg" firstAttribute="bottom" secondItem="upG-i1-bXC" secondAttribute="bottom" id="1XJ-70-Lte"/>
@@ -525,7 +527,7 @@
         <image name="il_794xN.1525391545_2uoc" width="794" height="1185"/>
         <image name="like" width="300" height="300"/>
         <image name="nope" width="300" height="300"/>
-        <image name="star2" width="300" height="300"/>
+        <image name="star-1" width="300" height="300"/>
         <image name="startnocircle" width="300" height="300"/>
         <image name="superlike" width="300" height="300"/>
         <image name="x" width="300" height="300"/>
