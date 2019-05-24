@@ -14,7 +14,7 @@ class DetailViewController: UIViewController{
     var favouriteSections = ["Super Liked", "Liked"]
     var favouriteArray = [[Dog]]()
     var urlString : String = ""
-    var testDog = Dog.init(id: "123", address: "Doggy", safariURL: "https://www.google.com", imageURL: "", name: "Ahboo", breed: "Labrador", age: DogAge.baby, size: DogSize.large, description: "", color: "Yellow", isMale: true)
+//    var testDog = Dog.init(id: "123", address: "Doggy", safariURL: "https://www.google.com", imageURL: "", name: "Ahboo", breed: "Labrador", age: DogAge.baby, size: DogSize.large, description: "", color: "Yellow", isMale: "male")
     @IBOutlet weak var collectionView : UICollectionView!
     
     
@@ -67,13 +67,11 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
     
     //number of sections : 2
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        print("\(favouriteSections.count)")
         return favouriteSections.count
     }
     
     //number of items in section
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("\(favouriteArray[section].count)")
         return favouriteArray[section].count
     }
     
@@ -89,8 +87,6 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
         singleTap.numberOfTapsRequired = 1
         singleTap.require(toFail: doubleTap)
         cell.addGestureRecognizer(singleTap)
-        
-        cell.setUpCell(dog: testDog)
 
         return cell
     }

@@ -11,10 +11,6 @@ import UIKit
 @objcMembers class User: NSObject {
 
     static let shared = User()
-    var filterSizes = [(name: String, isSelected: Bool)]()
-    var filterGenders = [(name: String, isSelected: Bool)]()
-    var filterAges = [(name: String, isSelected: Bool)]()
-    var filterSections = [[(name: String, isSelected: Bool)]]()
     var allDogs = [Dog]()
     var disliked = [Dog]()
     var liked = [Dog]()

@@ -24,7 +24,7 @@ class DetailCollectionViewCell: UICollectionViewCell {
         self.nameLabel.text = dog.name
         self.breedLabel.text = dog.breed
         self.ageLabel.text = ("\(dog.age)")
-        if(dog.isMale){
+        if(dog.gender == "male"){
             self.genderLabel.text = "Male"
         }else{
             self.genderLabel.text = "Female"

@@ -25,14 +25,14 @@ enum DogAge: String {
     var size:DogSize
     var detailDescription:String
     var color:String
-    var isMale:Bool
+    var gender:String
     var distance:Int?
     var image: UIImage?
     var imageURL:String
     var safariURL:String
     var address:String
     
-    init(id: String, address: String, safariURL: String, imageURL: String, name: String, breed: String, age: DogAge, size: DogSize, description: String, color: String, isMale: Bool) {
+    init(id: String, address: String, safariURL: String, imageURL: String, name: String, breed: String, age: DogAge, size: DogSize, description: String, color: String, isMale: String) {
         self.identifier = id
         self.address = address
         self.name = name
@@ -41,7 +41,7 @@ enum DogAge: String {
         self.size = size
         self.detailDescription = description
         self.color = color
-        self.isMale = isMale
+        self.gender = isMale
         self.imageURL = imageURL
         self.safariURL = safariURL
     }
@@ -64,7 +64,7 @@ enum DogAge: String {
         guard let colors = json["colors"] as? [String : Any] else { return nil }
         let color = colors["primary"] as? String ?? ""
         guard let gender = json["gender"] as? String else { return nil }
-        let isMale = gender.lowercased() == "male" ? true : false
+        let isMale = gender.lowercased() == "male" ? "male" : "female"
         guard let contact = json["contact"] as? [String : Any] else { return nil }
         guard let addressDictionary = contact["address"] as? [String : Any] else { return nil }
         let addressName = addressDictionary["address1"] as? String ?? "662 King St W"
