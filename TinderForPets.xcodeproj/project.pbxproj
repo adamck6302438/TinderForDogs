@@ -20,6 +20,7 @@
 		78844B012295F06700D2444D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78844B002295F06700D2444D /* Assets.xcassets */; };
 		78844B042295F06700D2444D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78844B022295F06700D2444D /* LaunchScreen.storyboard */; };
 		ED948420229751FC007FAE15 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED94841F229751FC007FAE15 /* LocationManager.swift */; };
+		EDC5A0B422986B3200CC399D /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC5A0B322986B3200CC399D /* ContainerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		78844B032295F06700D2444D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		78844B052295F06700D2444D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED94841F229751FC007FAE15 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		EDC5A0B322986B3200CC399D /* ContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 				ED94841F229751FC007FAE15 /* LocationManager.swift */,
 				78844AF62295F06700D2444D /* AppDelegate.swift */,
 				78844AF82295F06700D2444D /* ViewController.swift */,
+				EDC5A0B322986B3200CC399D /* ContainerView.swift */,
 				78844AFA2295F06700D2444D /* Main.storyboard */,
 				78844B002295F06700D2444D /* Assets.xcassets */,
 				78844B022295F06700D2444D /* LaunchScreen.storyboard */,
@@ -168,6 +171,7 @@
 				78844AF92295F06700D2444D /* ViewController.swift in Sources */,
 				784055B02297033400584C04 /* User.swift in Sources */,
 				0D84C69A22970D4A00499964 /* DetailCollectionViewCell.swift in Sources */,
+				EDC5A0B422986B3200CC399D /* ContainerView.swift in Sources */,
 				78844AF72295F06700D2444D /* AppDelegate.swift in Sources */,
 				784055AC2296F82400584C04 /* Dog.swift in Sources */,
 				78844AFF2295F06700D2444D /* TinderForPets.xcdatamodeld in Sources */,
@@ -323,6 +327,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D2VZ8N8LJC;
 				INFOPLIST_FILE = TinderForPets/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -344,6 +349,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D2VZ8N8LJC;
 				INFOPLIST_FILE = TinderForPets/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
