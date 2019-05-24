@@ -10,6 +10,7 @@ import UIKit
 
 enum DogSize: String {
     case small, medium, large, extraLarge
+    
 }
 
 enum DogAge: String {

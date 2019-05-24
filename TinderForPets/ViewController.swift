@@ -36,7 +36,7 @@ class ViewController: UIViewController {
         self.centerOfImageView = self.imageView.center
         setupUI()
         
-        
+        print(DogSize.large.rawValue)
     }
     
     
@@ -205,6 +205,7 @@ class ViewController: UIViewController {
         }
     }
     
+    
     func setupFilterArrays() {
         self.filterSizes.append((name: "Small", isSelected: false))
         self.filterSizes.append((name: "Medium", isSelected: false))
@@ -219,6 +220,43 @@ class ViewController: UIViewController {
         self.tableView.reloadData()
     }
     
+    func applyFilter(){
+        if User.shared.filterSizes != nil {
+            for (index, dog) in User.shared.allDogs.enumerated() {
+                for filter in User.shared.filterSizes{
+                    if filter.isSelected && dog.size.rawValue != filter.name.lowercased() {
+                        User.shared.allDogs.remove(at: index)
+                    }
+                }
+            }
+        }
+        
+        if User.shared.filterAges != nil {
+            for (index, dog) in User.shared.allDogs.enumerated() {
+                for filter in User.shared.filterAges{
+                    if filter.isSelected && dog.age.rawValue != filter.name.lowercased() {
+                        User.shared.allDogs.remove(at: index)
+                    }
+                }
+            }
+        }
+        
+        if User.shared.filterGenders != nil {
+            for (index, dog) in User.shared.allDogs.enumerated() {
+                for filter in User.shared.filterGenders{
+                    if(filter.isSelected){
+                        if dog.isMale && filter.name == "Male" {
+                            User.shared.allDogs.remove(at: index)
+                        }else if !dog.isMale && filter.name == "Female"{
+                            User.shared.allDogs.remove(at: index)
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+    
     //MARK: IBActions
     
     @IBAction func filterTapped(_ sender: Any) {
@@ -231,6 +269,10 @@ class ViewController: UIViewController {
         
     }
     
+
+    
+    
+    //handle tap for bottom buttons
     @IBAction func nopeTapped(_ sender: UIButton) {
         buttonIsEnable()
         self.nopeIcon.alpha = 1
