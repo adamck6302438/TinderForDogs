@@ -7,38 +7,63 @@
 //
 
 import UIKit
+import SafariServices
 
 class DetailViewController: UIViewController{
     
     var favouriteSections = ["Super Liked", "Liked"]
     var favouriteArray = [[Dog]]()
-//    var testDog = Dog.init(id: "123", name: "Dog", breed: "Lab", age: DogAge.adult, size: DogSize.extraLarge, description: "none", color: "black", isMale: true, distance: 100)
+    var urlString : String = ""
+    var testDog = Dog.init(id: "123", address: "Doggy", safariURL: "https://www.google.com", imageURL: "", name: "Ahboo", breed: "Labrador", age: DogAge.baby, size: DogSize.large, description: "", color: "Yellow", isMale: true)
     @IBOutlet weak var collectionView : UICollectionView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //
-//        User.shared.liked.append(testDog)
-//        User.shared.superLiked.append(testDog)
-        
-        //
         favouriteArray.append(User.shared.superLiked)
         favouriteArray.append(User.shared.liked)
-        
     }
-    /*
-    // MARK: - Navigation
+    
+    @IBAction func back(_ sender: Any) {
+        favouriteArray.removeAll()
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    
+    @objc func doubleTap(sender : UITapGestureRecognizer) {
+        let touch = sender.location(in: collectionView)
+        if let indexPath = collectionView.indexPathForItem(at: touch){
+            if indexPath.section == 0 {
+                User.shared.superLiked.remove(at: indexPath.row)
+                favouriteArray[0].remove(at: indexPath.row)
+            }else{
+                User.shared.liked.remove(at: indexPath.row)
+                favouriteArray[1].remove(at: indexPath.row)
+            }
+        }
+        collectionView.reloadData()
+    }
+    
+    @objc func singleTap(sender : UITapGestureRecognizer) {
+        let touch = sender.location(in: collectionView)
+        if let indexPath = collectionView.indexPathForItem(at: touch){
+            let dog = favouriteArray[indexPath.section][indexPath.row]
+            self.urlString = dog.safariURL
+            openURL(_sender: self)
+        }
+    }
+    
+    @IBAction func openURL(_sender: Any){
+        guard let url = URL(string: "\(self.urlString)") else {
+            return
+        }
+        let safariVC = SFSafariViewController(url: url)
+        present(safariVC, animated: true, completion: nil)
+    }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
 
-extension DetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension DetailViewController: UICollectionViewDataSource, UICollectionViewDelegate, SFSafariViewControllerDelegate {
     
     //number of sections : 2
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -55,18 +80,18 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
     //generate custom cell for each favourite dog
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "favourite", for: indexPath) as! DetailCollectionViewCell
-//        let dog = favouriteArray[indexPath.section][indexPath.row]
+        let dog = favouriteArray[indexPath.section][indexPath.row]
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTap(sender:)))
+        doubleTap.numberOfTapsRequired = 2
+        cell.addGestureRecognizer(doubleTap)
         
-//        cell.setUpCell(dog: testDog)
+        let singleTap = UITapGestureRecognizer(target: self, action: #selector(singleTap(sender:)))
+        singleTap.numberOfTapsRequired = 1
+        singleTap.require(toFail: doubleTap)
+        cell.addGestureRecognizer(singleTap)
         
-        //setup tap gesture recognizer
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector(("handleDoubleTap:")))
-        tapGestureRecognizer.numberOfTapsRequired = 2
-        cell.addGestureRecognizer(tapGestureRecognizer)
-        
-        //setup long press gesture recognizer
-        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: Selector(("handleLongPress:")))
-        cell.addGestureRecognizer(longPressGestureRecognizer)
+        cell.setUpCell(dog: testDog)
+
         return cell
     }
     
@@ -80,18 +105,17 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
         }
     }
     
-    
-    func handleDoubleTap(gesture : UITapGestureRecognizer){
-//        let pointInCollectionView : CGPoint = gesture.location(in: self.collectionView)
-//        let selectedIndexPath: IndexPath? = self.collectionView.indexPathForItem(at: pointInCollectionView)
-//        let selectedCell : DetailCollectionViewCell = self.collectionView.cellForItem(at: selectedIndexPath)
-        print("double tapped")
-    }
-    
-    //handle long press
-    func handleLongPress(gesture : UILongPressGestureRecognizer){
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
+        if let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as? HeaderCollectionReusableView{
+            sectionHeader.sectionHeaderLabel.text = "\(favouriteSections[indexPath.section])"
+            return sectionHeader
+        }
+        return UICollectionReusableView()
     }
-    
+
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        controller.dismiss(animated: true, completion: nil)
+    }
 }
 

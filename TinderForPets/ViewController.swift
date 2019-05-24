@@ -31,7 +31,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
         setupFilterArrays()
         NetworkManager.shared().fetchAccessToken()
         self.centerOfImageView = self.imageView.center
@@ -39,6 +38,7 @@ class ViewController: UIViewController {
         
         
     }
+    
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -308,6 +308,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         self.filterSections[indexPath.section][indexPath.row].isSelected = !self.filterSections[indexPath.section][indexPath.row].isSelected
         self.tableView.reloadData()
     }
+
     
 }
 

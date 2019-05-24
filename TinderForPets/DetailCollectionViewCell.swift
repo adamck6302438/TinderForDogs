@@ -20,17 +20,15 @@ class DetailCollectionViewCell: UICollectionViewCell {
     
     func setUpCell(dog : Dog) {
         self.dogInCell = dog
+        self.imageView.image = dog.image
         self.nameLabel.text = dog.name
-//        print(nameLabel.text)
         self.breedLabel.text = dog.breed
-//        print(breedLabel.text)
         self.ageLabel.text = ("\(dog.age)")
-//        print(ageLabel.text)
         if(dog.isMale){
             self.genderLabel.text = "Male"
         }else{
             self.genderLabel.text = "Female"
         }
-        self.distanceLabel.text = "\(dog.distance)"
+        self.distanceLabel.text = "1km"
     }
 }
