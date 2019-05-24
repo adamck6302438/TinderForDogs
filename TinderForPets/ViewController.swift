@@ -20,6 +20,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var nopeButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var superlikeButton: UIButton!
+    @IBOutlet weak var masterStackView: UIStackView!
+    
     
     
     var filterSizes = [(name: String, isSelected: Bool)]()
@@ -33,13 +35,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupFilterArrays()
         NetworkManager.shared().fetchAccessToken()
-        self.centerOfImageView = self.imageView.center
-        setupUI()
-        
         
     }
     
-    
+    override func viewDidLayoutSubviews() {
+        setupUI()
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let tLocation = touches.first?.location(in: self.view) else { return }
@@ -99,9 +100,8 @@ class ViewController: UIViewController {
                 
             } else {
                 UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
-                    
-                    self.self.imageViewContainer.center = CGPoint(x: self.view.center.x, y: self.centerOfImageView.y)
-                    self.self.imageViewContainer.transform = CGAffineTransform(rotationAngle: 0)
+                    self.imageViewContainer.center = CGPoint(x: self.view.center.x, y:self.centerOfImageView.y)
+                    self.imageViewContainer.transform = CGAffineTransform(rotationAngle: 0)
                     self.nopeIcon.alpha = 0
                     self.likeIcon.alpha = 0
                     self.superlikeIcon.alpha = 0
