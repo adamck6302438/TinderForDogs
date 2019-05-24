@@ -40,6 +40,7 @@
         NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
         self.accessToken = jsonResponse[@"access_token"];
         NSLog(@"accesToken is : %@", self.accessToken);
+        NSLog(@"DB  righr before calling fetch");
         [self fetchDogData];
     }];
     
@@ -81,10 +82,14 @@
         for (NSDictionary *dogDictionary in dogs) {
             Dog * dog = [Dog initWithJSONWithJson:dogDictionary];
             if (dog != nil) {
+                NSLog(@"DB  raining dogs");
                 [self fetchImageForDog:dog];
                 User.shared.allDogs = [User.shared.allDogs arrayByAddingObject:dog];
             }
         }
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [self.updateCardDelegate updateCardWithDogs];
+        }];
         
     }];
 
@@ -108,9 +113,6 @@
         }
         dog.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
         
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            [self.updateCardDelegate updateCardWithDogs:User.shared.allDogs];
-        }];
     }];
     [downloadTask resume];
 }

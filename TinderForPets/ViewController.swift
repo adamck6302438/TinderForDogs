@@ -10,10 +10,7 @@ import UIKit
 
 class ViewController: UIViewController,UpdateCardDelegate {
     
-    func updateCard(with dogs: [Dog]) {
-        
-        self.alldogs.append(contentsOf: dogs)
-        setupCards()
+    func updateCardWithDogs() {
         self.imageViewContainer.isHidden = false
         self.nextImageViewContainer.isHidden = false
         view.isUserInteractionEnabled = true
@@ -38,7 +35,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
     var filterAges = [(name: String, isSelected: Bool)]()
     var filterSections = [[(name: String, isSelected: Bool)]]()
     var centerOfImageView = CGPoint.zero
-    var index = 0;
+
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -48,6 +45,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
         view.isUserInteractionEnabled = false
         self.imageViewContainer.isHidden = true
         self.nextImageViewContainer.isHidden = true
+        setupCards()
 //        updateDogCard()
         
     }
@@ -154,8 +152,13 @@ class ViewController: UIViewController,UpdateCardDelegate {
                 self.nextImageViewContainer.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 self.imageViewContainer.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             }
-            self.currentContainer.dogImageView.image = alldogs[0].image
-            self.nextImageViewContainer.dogImageView.image = alldogs[1].image
+            self.currentContainer.dogImageView.image = User.shared.allDogs[1].image
+            self.currentContainer.nameLabel.text = User.shared.allDogs[1].name
+            self.currentContainer.ageLabel.text = User.shared.allDogs[1].age.rawValue
+//            self.currentContainer.distanceLabel.text = "Distance: " + String(User.shared.allDogs[1].distance!) + "km"
+            self.nextImageViewContainer.dogImageView.image = User.shared.allDogs[0].image
+            self.nextImageViewContainer.nameLabel.text = User.shared.allDogs[0].name
+            self.nextImageViewContainer.ageLabel.text = User.shared.allDogs[0].age.rawValue
             
             self.imageViewContainer.removeGestureRecognizer(panRecog)
             self.nextImageViewContainer.addGestureRecognizer(panRecog)
@@ -168,9 +171,13 @@ class ViewController: UIViewController,UpdateCardDelegate {
                 self.imageViewContainer.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 self.nextImageViewContainer.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             }
-            self.currentContainer.dogImageView.image = alldogs[0].image
-            self.imageViewContainer.dogImageView.image = alldogs[1].image
+            self.currentContainer.dogImageView.image = User.shared.allDogs[1].image
+            self.currentContainer.nameLabel.text = User.shared.allDogs[1].name
+            self.currentContainer.ageLabel.text = User.shared.allDogs[1].age.rawValue
             
+            self.imageViewContainer.dogImageView.image = User.shared.allDogs[0].image
+            self.imageViewContainer.nameLabel.text = User.shared.allDogs[0].name
+            self.imageViewContainer.ageLabel.text = User.shared.allDogs[0].age.rawValue
             self.nextImageViewContainer.removeGestureRecognizer(panRecog)
             self.imageViewContainer.addGestureRecognizer(panRecog)
             self.currentContainer = imageViewContainer
@@ -196,7 +203,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
             
         }) { (complete) in
             if complete {
-                User.shared.disliked.append(self.alldogs.removeFirst())
+                User.shared.disliked.append(User.shared.allDogs.removeFirst())
                 self.showNextCard()
             }
         }
@@ -213,7 +220,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
             
         }) { (complete) in
             if complete {
-                User.shared.liked.append(self.alldogs.removeFirst())
+                User.shared.liked.append(User.shared.allDogs.removeFirst())
                 self.showNextCard()
             }
         }
@@ -228,7 +235,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
             
         }) { (complete) in
             if complete {
-                User.shared.superLiked.append(self.alldogs.removeFirst())
+                User.shared.superLiked.append(User.shared.allDogs.removeFirst())
                 self.showNextCard()
             }
         }
@@ -238,20 +245,23 @@ class ViewController: UIViewController,UpdateCardDelegate {
     }
     
     func fetchMoreDogs() {
+        print("DB fetching dogs")
         if User.shared.allDogs.count < 5 {
+            print("DB  inside fetching dogs")
             NetworkManager.shared().currentPage += 1
             NetworkManager.shared().fetchAccessToken()
+            
         }
     }
     
     //MARK: Setups
     func updateDogCard(){
         
-        self.imageViewContainer.dogImageView.image = self.alldogs[0].image
-        self.imageViewContainer.nameLabel.text = self.alldogs[0].name
+        self.imageViewContainer.dogImageView.image = User.shared.allDogs[0].image
+        self.imageViewContainer.nameLabel.text = User.shared.allDogs[0].name
         
-        self.nextImageViewContainer.dogImageView.image = self.alldogs[1].image
-        self.nextImageViewContainer.nameLabel.text = self.alldogs[1].name
+        self.nextImageViewContainer.dogImageView.image = User.shared.allDogs[1].image
+        self.nextImageViewContainer.nameLabel.text = User.shared.allDogs[1].name
     }
     
     func setupCards()  {

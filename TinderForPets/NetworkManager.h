@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class Dog;
 @protocol UpdateCardDelegate <NSObject>
 
--(void)updateCardWithDogs: (NSArray<Dog*>*) dogs;
+-(void)updateCardWithDogs;
 
 @end
 
