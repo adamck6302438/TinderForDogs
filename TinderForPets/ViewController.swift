@@ -8,39 +8,51 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,UpdateCardDelegate {
+    
+    func updateCard(with dogs: [Dog]) {
+        
+        self.alldogs.append(contentsOf: dogs)
+        setupCards()
+        self.imageViewContainer.isHidden = false
+        self.nextImageViewContainer.isHidden = false
+        view.isUserInteractionEnabled = true
+    }
     
 
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var tableView: UITableView!
-
+    
     @IBOutlet weak var nextImageViewContainer: ContainerView!
     @IBOutlet weak var imageViewContainer: ContainerView!
-
+    
     @IBOutlet weak var nopeButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var superlikeButton: UIButton!
     @IBOutlet var panRecog: UIPanGestureRecognizer!
     
+    var alldogs:[Dog] = []
     var currentContainer: ContainerView!
     var filterSizes = [(name: String, isSelected: Bool)]()
     var filterGenders = [(name: String, isSelected: Bool)]()
     var filterAges = [(name: String, isSelected: Bool)]()
     var filterSections = [[(name: String, isSelected: Bool)]]()
     var centerOfImageView = CGPoint.zero
-    
+    var index = 0;
     override func viewDidLoad() {
         
         super.viewDidLoad()
         setupFilterArrays()
         NetworkManager.shared().fetchAccessToken()
-        setupCards()
+        NetworkManager.shared().updateCardDelegate = self
+        view.isUserInteractionEnabled = false
+        self.imageViewContainer.isHidden = true
+        self.nextImageViewContainer.isHidden = true
+//        updateDogCard()
+        
+    }
 
-    }
     
-    override func viewDidLayoutSubviews() {
-        setupUI()
-    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let tLocation = touches.first?.location(in: self.view) else { return }
@@ -60,6 +72,8 @@ class ViewController: UIViewController {
         let translation = sender.translation(in: self.view)
         
         switch sender.state {
+        case .began:
+            self.centerOfImageView = self.imageViewContainer.center
         case .changed:
             let angleMultiplier = (self.currentContainer.center.x - view.center.x) / (view.frame.maxX / 2)
             let angle: CGFloat = (10.0 * .pi / 180) * angleMultiplier
@@ -83,6 +97,7 @@ class ViewController: UIViewController {
             }
             
         case .ended:
+            
             let distanceFromCenterX = (self.currentContainer.center.x - view.center.x) / view.frame.maxX
             let distanceFromCenterY = (self.currentContainer.center.y - view.center.y) / view.frame.maxY
             
@@ -139,25 +154,29 @@ class ViewController: UIViewController {
                 self.nextImageViewContainer.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 self.imageViewContainer.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             }
-            
+            self.currentContainer.dogImageView.image = alldogs[0].image
+            self.nextImageViewContainer.dogImageView.image = alldogs[1].image
             
             self.imageViewContainer.removeGestureRecognizer(panRecog)
             self.nextImageViewContainer.addGestureRecognizer(panRecog)
             self.currentContainer = nextImageViewContainer
+            
         } else {
+            
             self.view.insertSubview(self.nextImageViewContainer, belowSubview: self.imageViewContainer)
             UIView.animate(withDuration: 0.1) {
                 self.imageViewContainer.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 self.nextImageViewContainer.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             }
+            self.currentContainer.dogImageView.image = alldogs[0].image
+            self.imageViewContainer.dogImageView.image = alldogs[1].image
+            
             self.nextImageViewContainer.removeGestureRecognizer(panRecog)
             self.imageViewContainer.addGestureRecognizer(panRecog)
             self.currentContainer = imageViewContainer
         }
         
 
-        
-        
     }
     
     //MARK: helpers
@@ -177,6 +196,7 @@ class ViewController: UIViewController {
             
         }) { (complete) in
             if complete {
+                User.shared.disliked.append(self.alldogs.removeFirst())
                 self.showNextCard()
             }
         }
@@ -184,34 +204,37 @@ class ViewController: UIViewController {
     }
     
     func like() {
+        
+        print("count: \(User.shared.allDogs.count)")
+
         UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
             self.self.currentContainer.center = CGPoint(x: self.view.frame.maxX * 1.5, y: self.view.center.y)
             self.self.currentContainer.transform = CGAffineTransform(rotationAngle: 0)
             
         }) { (complete) in
             if complete {
+                User.shared.liked.append(self.alldogs.removeFirst())
                 self.showNextCard()
             }
         }
         fetchMoreDogs()
-        
-
     }
     
     func superlike() {
-
+        
         UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
             self.self.currentContainer.center = CGPoint(x: self.view.center.x, y: self.view.frame.maxY * -1.5)
             self.self.currentContainer.transform = CGAffineTransform(rotationAngle: 0)
-
+            
         }) { (complete) in
             if complete {
+                User.shared.superLiked.append(self.alldogs.removeFirst())
                 self.showNextCard()
             }
         }
-
+        
         fetchMoreDogs()
-
+        
     }
     
     func fetchMoreDogs() {
@@ -221,20 +244,22 @@ class ViewController: UIViewController {
         }
     }
     
-    
     //MARK: Setups
+    func updateDogCard(){
+        
+        self.imageViewContainer.dogImageView.image = self.alldogs[0].image
+        self.imageViewContainer.nameLabel.text = self.alldogs[0].name
+        
+        self.nextImageViewContainer.dogImageView.image = self.alldogs[1].image
+        self.nextImageViewContainer.nameLabel.text = self.alldogs[1].name
+    }
     
     func setupCards()  {
+        
         self.imageViewContainer.setAlphaZero()
         self.nextImageViewContainer.setAlphaZero()
         self.currentContainer = imageViewContainer
         self.nextImageViewContainer.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-    }
-    
-    func setupUI() {
-        
-        self.centerOfImageView = self.imageViewContainer.center
-
     }
     
     func setupFilterView() {
@@ -283,10 +308,8 @@ class ViewController: UIViewController {
         }){ (_) in
             self.nope()
         };
-        
-        
-        
     }
+    
     @IBAction func superliketapped(_ sender: UIButton) {
         
         buttonIsEnable()
@@ -296,10 +319,8 @@ class ViewController: UIViewController {
         }){ (_) in
             self.superlike()
         };
-        
-        
-        
     }
+    
     @IBAction func likeTapped(_ sender: Any) {
         self.currentContainer.likeIcon.alpha = 1
         buttonIsEnable()
@@ -307,12 +328,16 @@ class ViewController: UIViewController {
             let angle: CGFloat = (10.0 * .pi / 180)
             self.currentContainer.transform = CGAffineTransform(rotationAngle: angle)
             self.self.currentContainer.center = CGPoint(x: self.view.center.x + 450, y: self.centerOfImageView.y - 250)
-        }){ (_) in
+            }){ (_) in
             self.like()
-        };
-    }
+            };
+        }
+    
+    
     
 }
+
+
 
 //MARK: Table View Delegates
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -350,7 +375,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         self.filterSections[indexPath.section][indexPath.row].isSelected = !self.filterSections[indexPath.section][indexPath.row].isSelected
         self.tableView.reloadData()
     }
-
+    
     
 }
 

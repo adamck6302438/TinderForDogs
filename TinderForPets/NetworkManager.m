@@ -81,15 +81,20 @@
         for (NSDictionary *dogDictionary in dogs) {
             Dog * dog = [Dog initWithJSONWithJson:dogDictionary];
             if (dog != nil) {
+                [self fetchImageForDog:dog];
                 User.shared.allDogs = [User.shared.allDogs arrayByAddingObject:dog];
             }
         }
+        
     }];
 
     [dataTask resume];
 }
 
+
+
 -(void)fetchImageForDog: (Dog *)dog {
+
     NSURL *url = [NSURL URLWithString:dog.imageURL];
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -102,6 +107,10 @@
             return;
         }
         dog.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
+        
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [self.updateCardDelegate updateCardWithDogs:User.shared.allDogs];
+        }];
     }];
     [downloadTask resume];
 }

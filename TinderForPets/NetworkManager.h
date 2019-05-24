@@ -10,8 +10,13 @@
 #import <CoreLocation/CoreLocation.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
 @class Dog;
+@protocol UpdateCardDelegate <NSObject>
+
+-(void)updateCardWithDogs: (NSArray<Dog*>*) dogs;
+
+@end
+
 
 @interface NetworkManager : NSObject
 
@@ -20,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString * accessToken;
 @property (assign, nonatomic) NSInteger currentPage;
 @property (strong, nonatomic) CLLocationManager * locationManager;
+@property (weak, nonatomic) id<UpdateCardDelegate> updateCardDelegate;
 
 -(void)fetchAccessToken;
 -(void)fetchImageForDog: (Dog *)dog;
