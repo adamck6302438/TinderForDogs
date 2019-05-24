@@ -18,4 +18,12 @@ class ContainerView: UIView {
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     
+    func setAlphaZero()  {
+        self.nopeIcon.alpha = 0
+        self.superlikeIcon.alpha = 0
+        self.likeIcon.alpha = 0
+
+    }
+    
+
 }
