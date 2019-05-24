@@ -154,6 +154,7 @@ class ViewController: UIViewController {
                 self.showNextCard()
             }
         }
+        fetchMoreDogs()
     }
     
     func like() {
@@ -166,6 +167,7 @@ class ViewController: UIViewController {
                 self.showNextCard()
             }
         }
+        fetchMoreDogs()
     }
     
     func superlike() {
@@ -180,8 +182,15 @@ class ViewController: UIViewController {
             }
         }
         
+        fetchMoreDogs()
         
-        
+    }
+    
+    func fetchMoreDogs() {
+        if User.shared.allDogs.count < 5 {
+            NetworkManager.shared().currentPage += 1
+            NetworkManager.shared().fetchAccessToken() // Fetch access token will also fetch new dogs.
+        }
     }
     
     

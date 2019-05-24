@@ -84,9 +84,6 @@
                 User.shared.allDogs = [User.shared.allDogs arrayByAddingObject:dog];
             }
         }
-        
-        
-        
     }];
 
     [dataTask resume];
