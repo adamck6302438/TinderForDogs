@@ -11,24 +11,19 @@ import UIKit
 class ViewController: UIViewController,UpdateCardDelegate {
     
     func initializeCard() {
-        
+        self.loadingImage.removeFromSuperview()
         self.imageViewContainer.isHidden = false
         self.nextImageViewContainer.isHidden = false
         view.isUserInteractionEnabled = true
         updateDogCard()
     }
-    
-    func updateCardWithDogs() {
-
-    }
-    
 
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var nextImageViewContainer: ContainerView!
     @IBOutlet weak var imageViewContainer: ContainerView!
-    
+    @IBOutlet weak var loadingImage: UIImageView!
     @IBOutlet weak var nopeButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var superlikeButton: UIButton!
@@ -138,7 +133,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
         self.currentContainer.superlikeIcon.alpha = 0
         
         self.currentContainer.center = CGPoint(x: self.view.center.x, y: self.centerOfImageView.y)
-        self.currentContainer.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+        self.currentContainer.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
         
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
@@ -153,7 +148,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
             self.view.insertSubview(self.imageViewContainer, belowSubview: self.nextImageViewContainer)
             UIView.animate(withDuration: 0.1) {
                 self.nextImageViewContainer.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                self.imageViewContainer.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+                self.imageViewContainer.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
             }
             self.currentContainer.dogImageView.image = User.shared.allDogs[1].image
             self.currentContainer.nameLabel.text = User.shared.allDogs[1].name
@@ -172,7 +167,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
             self.view.insertSubview(self.nextImageViewContainer, belowSubview: self.imageViewContainer)
             UIView.animate(withDuration: 0.1) {
                 self.imageViewContainer.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                self.nextImageViewContainer.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+                self.nextImageViewContainer.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
             }
             self.currentContainer.dogImageView.image = User.shared.allDogs[1].image
             self.currentContainer.nameLabel.text = User.shared.allDogs[1].name
@@ -323,7 +318,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
         if User.shared.allDogs.count < 5 {
             NetworkManager.shared().fetchAccessToken() // This also fetches dogs.
         }
-        
+                
         
     }
 
@@ -382,7 +377,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
 
 
 
-//MARK: Table View Delegates
+//MARK: Delegates
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -428,4 +423,6 @@ extension ViewController : NetworkManagerDelegate {
     }
     
 }
+
+
 

@@ -20,7 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol UpdateCardDelegate <NSObject>
 
--(void)updateCardWithDogs;
 -(void)initializeCard;
 
 @end

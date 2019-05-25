@@ -150,7 +150,7 @@
                 dog.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
                 
                 if (dog.image == nil) {
-    
+                    dog.image = [UIImage imageNamed:@"Unknown"];
                 }
                 
                 NSLog(@"dog: %@",User.shared.allDogs[0]);

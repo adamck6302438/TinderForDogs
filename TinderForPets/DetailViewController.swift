@@ -14,6 +14,7 @@ class DetailViewController: UIViewController{
     var favouriteSections = ["Super Liked", "Liked"]
     var favouriteArray = [[Dog]]()
     var urlString : String = ""
+    var flowLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var collectionView : UICollectionView!
     
     
@@ -21,6 +22,17 @@ class DetailViewController: UIViewController{
         super.viewDidLoad()
         favouriteArray.append(User.shared.superLiked)
         favouriteArray.append(User.shared.liked)
+        setupFlowLayout()
+    }
+    
+    func setupFlowLayout() {
+        
+        self.flowLayout =  self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+        self.flowLayout.minimumInteritemSpacing = 8
+        let width = CGFloat.init( (self.view.frame.width - 8) / 2.0)
+        let height = CGFloat.init(width * (4.0/3.0))
+        self.flowLayout.itemSize = CGSize.init(width: width, height: height)
+        
     }
     
     @IBAction func back(_ sender: Any) {
@@ -90,15 +102,6 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
         return cell
     }
     
-    class MyCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout
-    {
-        //MARK: - UICollectionViewDelegateFlowLayout
-        
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
-        {
-            return CGSize(width: self.view.frame.width/2, height: self.view.frame.height/2)
-        }
-    }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
