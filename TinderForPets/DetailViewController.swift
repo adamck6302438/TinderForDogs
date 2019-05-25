@@ -14,7 +14,6 @@ class DetailViewController: UIViewController{
     var favouriteSections = ["Super Liked", "Liked"]
     var favouriteArray = [[Dog]]()
     var urlString : String = ""
-//    var testDog = Dog.init(id: "123", address: "Doggy", safariURL: "https://www.google.com", imageURL: "", name: "Ahboo", breed: "Labrador", age: DogAge.baby, size: DogSize.large, description: "", color: "Yellow", isMale: "male")
     @IBOutlet weak var collectionView : UICollectionView!
     
     
@@ -22,7 +21,6 @@ class DetailViewController: UIViewController{
         super.viewDidLoad()
         favouriteArray.append(User.shared.superLiked)
         favouriteArray.append(User.shared.liked)
-        print("\(favouriteArray)")
     }
     
     @IBAction func back(_ sender: Any) {

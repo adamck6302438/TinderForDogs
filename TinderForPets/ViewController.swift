@@ -40,13 +40,12 @@ class ViewController: UIViewController,UpdateCardDelegate {
         
         super.viewDidLoad()
         setupFilterArrays()
-        NetworkManager.shared().fetchAccessToken()
         NetworkManager.shared().updateCardDelegate = self
+        NetworkManager.shared().delegate = self
         view.isUserInteractionEnabled = false
         self.imageViewContainer.isHidden = true
         self.nextImageViewContainer.isHidden = true
         setupCards()
-        NetworkManager.shared().delegate = self
     }
 
     
@@ -156,7 +155,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
             self.currentContainer.dogImageView.image = User.shared.allDogs[1].image
             self.currentContainer.nameLabel.text = User.shared.allDogs[1].name
             self.currentContainer.ageLabel.text = User.shared.allDogs[1].age.rawValue
-//            self.currentContainer.distanceLabel.text = "Distance: " + String(User.shared.allDogs[1].distance!) + "km"
+            self.currentContainer.distanceLabel.text = "Distance: " + String(User.shared.allDogs[1].distance!) + "km"
             self.nextImageViewContainer.dogImageView.image = User.shared.allDogs[0].image
             self.nextImageViewContainer.nameLabel.text = User.shared.allDogs[0].name
             self.nextImageViewContainer.ageLabel.text = User.shared.allDogs[0].age.rawValue
@@ -175,6 +174,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
             self.currentContainer.dogImageView.image = User.shared.allDogs[1].image
             self.currentContainer.nameLabel.text = User.shared.allDogs[1].name
             self.currentContainer.ageLabel.text = User.shared.allDogs[1].age.rawValue
+            self.currentContainer.distanceLabel.text = "Distance: " + String(User.shared.allDogs[1].distance!) + "km"
             
             self.imageViewContainer.dogImageView.image = User.shared.allDogs[0].image
             self.imageViewContainer.nameLabel.text = User.shared.allDogs[0].name
@@ -212,8 +212,6 @@ class ViewController: UIViewController,UpdateCardDelegate {
     }
     
     func like() {
-        
-        print("count: \(User.shared.allDogs.count)")
 
         UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
             self.self.currentContainer.center = CGPoint(x: self.view.frame.maxX * 1.5, y: self.view.center.y)
