@@ -71,35 +71,35 @@
     
     NSString * urlString = [NSString stringWithFormat:@"https://api.petfinder.com/v2/animals?type=dog&page=%ld",(long)self.currentPage];
     NSURL *url = [NSURL URLWithString:urlString];
-
+    
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:url];
     NSString *value = [NSString stringWithFormat:@"Bearer %@", self.accessToken];
     [urlRequest addValue:value forHTTPHeaderField:@"Authorization"];
-
+    
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
-
+    
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:urlRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-
+        
         if (error) {
             NSLog(@"error: %@", error.localizedDescription);
             return;
         }
-
+        
         NSError *jsonError = nil;
         NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
         NSArray *dogs = jsonResponse[@"animals"];
-
+        
         if (jsonError) {
             NSLog(@"jsonError: %@", jsonError.localizedDescription);
             return;
         }
-
+        
         for (NSDictionary *dogDictionary in dogs) {
             Dog * dog = [Dog initWithJSONWithJson:dogDictionary];
             if (dog != nil) {
-
-               User.shared.allDogs = [User.shared.allDogs arrayByAddingObject:dog];
+                
+                User.shared.allDogs = [User.shared.allDogs arrayByAddingObject:dog];
                 
             }
         }
@@ -107,24 +107,24 @@
         [self fetchImageForDogsWithCompletionHandler:^(BOOL completed) {
             
             if (completed) {
-                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                        
-                        if (self.needToInitialize) {
-                            [self.updateCardDelegate initializeCard];
-                            self.needToInitialize = NO;
-                        }
-                        
-                    }];
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    
+                    if (self.needToInitialize) {
+                        [self.updateCardDelegate initializeCard];
+                        self.needToInitialize = NO;
+                    }
+                    
+                }];
             }
-
+            
         }];
         
         [self.delegate didFetchDogs];
         
-
+        
         
     }];
-
+    
     [dataTask resume];
 }
 
@@ -147,30 +147,27 @@
                     NSLog(@"error: %@", error.localizedDescription);
                     return;
                 }
+                
+                
+                if (User.shared.allDogs.firstObject.image != nil) {
+                    completed(YES);
+                }
+                
                 dog.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
                 
-                if (dog.image == nil) {
-                    dog.image = [UIImage imageNamed:@"Unknown"];
-                }
                 
-                NSLog(@"dog: %@",User.shared.allDogs[0]);
-                NSLog(@"first: %@",User.shared.allDogs[0].image);
-                
-                if (User.shared.allDogs.lastObject.image != nil) {
-                        completed(YES);
-                }
                 
             }];
             
             [downloadTask resume];
         }
         
-
+        
     }
     
     
-
-
+    
+    
 }
 
 #define SINGLETON_FOR_CLASS(NetworkManager)

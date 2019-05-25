@@ -128,6 +128,8 @@ class ViewController: UIViewController,UpdateCardDelegate {
     
     func showNextCard() {
         
+        print("count: \(User.shared.allDogs.count)")
+        
         self.currentContainer.nopeIcon.alpha = 0
         self.currentContainer.likeIcon.alpha = 0
         self.currentContainer.superlikeIcon.alpha = 0
@@ -242,7 +244,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
     }
     
     func fetchMoreDogs() {
-        if User.shared.allDogs.count < 5 {
+        if User.shared.allDogs.count < 20 {
             NetworkManager.shared().fetchAccessToken()
         }
     }
