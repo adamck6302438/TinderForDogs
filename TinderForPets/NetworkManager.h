@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol UpdateCardDelegate <NSObject>
 
 -(void)updateCardWithDogs;
+-(void)initializeCard;
 
 @end
 
@@ -36,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) id <NetworkManagerDelegate> delegate;
 
 -(void)fetchAccessToken;
--(void)fetchImageForDog: (Dog *)dog;
+-(void)fetchImageForDogsWithCompletionHandler:(void(^)(BOOL))completed;
 + (NetworkManager *) shared;
 
 @end

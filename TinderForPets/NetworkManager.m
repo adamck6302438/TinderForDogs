@@ -9,7 +9,22 @@
 #import "NetworkManager.h"
 #import "TinderForPets-Swift.h"
 
+@interface NetworkManager()
+
+@property (nonatomic) BOOL needToInitialize;
+
+@end
+
 @implementation NetworkManager
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _needToInitialize = YES;
+    }
+    return self;
+}
 
 -(void)fetchAccessToken {
     
@@ -84,15 +99,29 @@
             Dog * dog = [Dog initWithJSONWithJson:dogDictionary];
             if (dog != nil) {
 
-                [self fetchImageForDog:dog];
-                User.shared.allDogs = [User.shared.allDogs arrayByAddingObject:dog];
+               User.shared.allDogs = [User.shared.allDogs arrayByAddingObject:dog];
+                
             }
         }
         
-        [self.delegate didFetchDogs];
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            [self.updateCardDelegate updateCardWithDogs];
+        [self fetchImageForDogsWithCompletionHandler:^(BOOL completed) {
+            
+            if (completed) {
+                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                        
+                        if (self.needToInitialize) {
+                            [self.updateCardDelegate initializeCard];
+                            self.needToInitialize = NO;
+                        }
+                        
+                    }];
+            }
+
         }];
+        
+        [self.delegate didFetchDogs];
+        
+
         
     }];
 
@@ -101,23 +130,47 @@
 
 
 
--(void)fetchImageForDog: (Dog *)dog {
-
-    NSURL *url = [NSURL URLWithString:dog.imageURL];
+-(void)fetchImageForDogsWithCompletionHandler:(void(^)(BOOL))completed {
     
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
-    
-    NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithURL:url completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (error) {
-            NSLog(@"error: %@", error.localizedDescription);
-            return;
-        }
-        dog.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
+    for (Dog *dog in User.shared.allDogs) {
         
-    }];
-    [downloadTask resume];
+        if (dog.image == nil) {
+            
+            NSURL *url = [NSURL URLWithString:dog.imageURL];
+            
+            NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+            
+            NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
+            
+            NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithURL:url completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                if (error) {
+                    NSLog(@"error: %@", error.localizedDescription);
+                    return;
+                }
+                dog.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
+                
+                if (dog.image == nil) {
+    
+                }
+                
+                NSLog(@"dog: %@",User.shared.allDogs[0]);
+                NSLog(@"first: %@",User.shared.allDogs[0].image);
+                
+                if (User.shared.allDogs.lastObject.image != nil) {
+                        completed(YES);
+                }
+                
+            }];
+            
+            [downloadTask resume];
+        }
+        
+
+    }
+    
+    
+
+
 }
 
 #define SINGLETON_FOR_CLASS(NetworkManager)

@@ -10,10 +10,16 @@ import UIKit
 
 class ViewController: UIViewController,UpdateCardDelegate {
     
-    func updateCardWithDogs() {
+    func initializeCard() {
+        
         self.imageViewContainer.isHidden = false
         self.nextImageViewContainer.isHidden = false
         view.isUserInteractionEnabled = true
+        updateDogCard()
+    }
+    
+    func updateCardWithDogs() {
+
     }
     
 
@@ -126,8 +132,6 @@ class ViewController: UIViewController,UpdateCardDelegate {
     }
     
     func showNextCard() {
-        //TODO: Need to have more than 1 imageView on screen @ once.
-        // Need to setup next card while current card is on screen.
         
         self.currentContainer.nopeIcon.alpha = 0
         self.currentContainer.likeIcon.alpha = 0
@@ -154,7 +158,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
             self.currentContainer.dogImageView.image = User.shared.allDogs[1].image
             self.currentContainer.nameLabel.text = User.shared.allDogs[1].name
             self.currentContainer.ageLabel.text = User.shared.allDogs[1].age.rawValue
-            self.currentContainer.distanceLabel.text = "Distance: " + String(User.shared.allDogs[1].distance!) + "km"
+            self.currentContainer.distanceLabel.text = "Distance: " + String(User.shared.allDogs[1].distance!) + "km" 
             self.nextImageViewContainer.dogImageView.image = User.shared.allDogs[0].image
             self.nextImageViewContainer.nameLabel.text = User.shared.allDogs[0].name
             self.nextImageViewContainer.ageLabel.text = User.shared.allDogs[0].age.rawValue
@@ -250,7 +254,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
     
     //MARK: Setups
     func updateDogCard(){
-        
+
         self.imageViewContainer.dogImageView.image = User.shared.allDogs[0].image
         self.imageViewContainer.nameLabel.text = User.shared.allDogs[0].name
         

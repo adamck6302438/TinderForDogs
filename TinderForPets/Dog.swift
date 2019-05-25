@@ -74,7 +74,8 @@ enum DogAge: String {
         let address = addressName == "662 King St W" ? "662 King St W, Toronto, ON, Canada" : "\(addressName), \(cityName), \(stateName), \(countryName)"
         let dog = Dog(id: id, address: address, safariURL: safariURL, imageURL: imageURL, name: name, breed: breed, age: age, size: dogSize, description: description, color: color, isMale: isMale)
         LocationManager.shared.fetchDistanceFromCurrentLocationFor(dog: dog)
-        NetworkManager.shared().fetchImage(for: dog)
+//        NetworkManager.shared().fetchImage(for: dog)
         return dog
     }
+    
 }
