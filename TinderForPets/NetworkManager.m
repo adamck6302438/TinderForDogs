@@ -50,6 +50,8 @@
     
     if (!self.currentPage) {
         self.currentPage = 1;
+    } else {
+        self.currentPage += 1;
     }
     
     NSString * urlString = [NSString stringWithFormat:@"https://api.petfinder.com/v2/animals?type=dog&page=%ld",(long)self.currentPage];

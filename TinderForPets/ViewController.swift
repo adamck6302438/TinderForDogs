@@ -28,7 +28,6 @@ class ViewController: UIViewController,UpdateCardDelegate {
     @IBOutlet weak var superlikeButton: UIButton!
     @IBOutlet var panRecog: UIPanGestureRecognizer!
     
-    var alldogs:[Dog] = []
     var currentContainer: ContainerView!
     var filterSizes = [(name: String, isSelected: Bool)]()
     var filterGenders = [(name: String, isSelected: Bool)]()
@@ -245,9 +244,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
     
     func fetchMoreDogs() {
         if User.shared.allDogs.count < 5 {
-            NetworkManager.shared().currentPage += 1
             NetworkManager.shared().fetchAccessToken()
-            
         }
     }
     
