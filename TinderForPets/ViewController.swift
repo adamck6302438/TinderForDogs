@@ -246,9 +246,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
     }
     
     func fetchMoreDogs() {
-        print("DB fetching dogs")
         if User.shared.allDogs.count < 5 {
-            print("DB  inside fetching dogs")
             NetworkManager.shared().currentPage += 1
             NetworkManager.shared().fetchAccessToken()
             

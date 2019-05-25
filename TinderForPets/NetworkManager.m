@@ -40,7 +40,6 @@
         NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
         self.accessToken = jsonResponse[@"access_token"];
         NSLog(@"accesToken is : %@", self.accessToken);
-        NSLog(@"DB  righr before calling fetch");
         [self fetchDogData];
     }];
     
@@ -82,7 +81,6 @@
         for (NSDictionary *dogDictionary in dogs) {
             Dog * dog = [Dog initWithJSONWithJson:dogDictionary];
             if (dog != nil) {
-                NSLog(@"DB  raining dogs");
                 [self fetchImageForDog:dog];
                 User.shared.allDogs = [User.shared.allDogs arrayByAddingObject:dog];
             }
