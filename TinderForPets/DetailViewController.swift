@@ -15,6 +15,7 @@ class DetailViewController: UIViewController{
     var favouriteArray = [[Dog]]()
     var urlString : String = ""
     var flowLayout: UICollectionViewFlowLayout!
+    var longPressGestureRecognizer : UILongPressGestureRecognizer!
     @IBOutlet weak var collectionView : UICollectionView!
     
     
@@ -23,6 +24,8 @@ class DetailViewController: UIViewController{
         favouriteArray.append(User.shared.superLiked)
         favouriteArray.append(User.shared.liked)
         setupFlowLayout()
+        longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(moveCell(sender:)))
+        collectionView.addGestureRecognizer(longPressGestureRecognizer)
     }
     
     func setupFlowLayout() {
@@ -61,6 +64,22 @@ class DetailViewController: UIViewController{
             let dog = favouriteArray[indexPath.section][indexPath.row]
             self.urlString = dog.safariURL
             openURL(_sender: self)
+        }
+    }
+    
+    @objc func moveCell(sender : UILongPressGestureRecognizer){
+        switch sender.state {
+        case .began:
+            guard let selectedIndexPath = collectionView.indexPathForItem(at: sender.location(in: collectionView)) else {
+                break
+            }
+            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+        case .changed:
+            collectionView.updateInteractiveMovementTargetPosition(sender.location(in: sender.view))
+        case .ended:
+            collectionView.endInteractiveMovement()
+        default:
+            collectionView.cancelInteractiveMovement()
         }
     }
     
@@ -114,6 +133,32 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
 
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         controller.dismiss(animated: true, completion: nil)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let dog = favouriteArray[sourceIndexPath.section][sourceIndexPath.row]
+        let cell = favouriteArray[sourceIndexPath.section].remove(at: sourceIndexPath.item)
+        favouriteArray[destinationIndexPath.section].insert(cell, at: destinationIndexPath.item)
+        if(sourceIndexPath.section == 0){
+            User.shared.superLiked.remove(at: sourceIndexPath.row)
+            if(destinationIndexPath.section == 0){
+                User.shared.superLiked.insert(dog, at: destinationIndexPath.row)
+            }else{
+                User.shared.liked.insert(dog, at: destinationIndexPath.row)
+            }
+        }else if(sourceIndexPath.section == 1){
+            User.shared.liked.remove(at: sourceIndexPath.row)
+            if(destinationIndexPath.section == 0){
+                User.shared.superLiked.insert(dog, at: destinationIndexPath.row)
+            }else{
+                User.shared.liked.insert(dog, at: destinationIndexPath.row)
+            }
+        }
+        
     }
 }
 
