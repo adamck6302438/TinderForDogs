@@ -221,15 +221,6 @@
                                     <outletCollection property="gestureRecognizers" destination="mmv-Qq-HBg" appends="YES" id="X6h-Ze-6Kj"/>
                                 </connections>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loading" translatesAutoresizingMaskIntoConstraints="NO" id="ITt-pj-eJb">
-                                <rect key="frame" x="8" y="112" width="398" height="613.5"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="30"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                            </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="79r-gi-xnF" userLabel="bottomButtonStackView">
                                 <rect key="frame" x="0.0" y="725.5" width="414" height="136.5"/>
                                 <subviews>
@@ -295,6 +286,27 @@
                                     </view>
                                 </subviews>
                             </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pcu-ZH-xv2">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loading" translatesAutoresizingMaskIntoConstraints="NO" id="ITt-pj-eJb">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="30"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="ITt-pj-eJb" secondAttribute="trailing" id="Vxm-J6-kEs"/>
+                                    <constraint firstAttribute="bottom" secondItem="ITt-pj-eJb" secondAttribute="bottom" constant="78" id="Z6I-Yn-5zg"/>
+                                    <constraint firstItem="ITt-pj-eJb" firstAttribute="leading" secondItem="Pcu-ZH-xv2" secondAttribute="leading" id="eT0-5H-RON"/>
+                                    <constraint firstItem="ITt-pj-eJb" firstAttribute="top" secondItem="Pcu-ZH-xv2" secondAttribute="top" id="fUo-MS-eLB"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -302,6 +314,7 @@
                             <constraint firstItem="oXi-l9-fKg" firstAttribute="bottom" secondItem="79r-gi-xnF" secondAttribute="bottom" id="1bs-jX-oaZ"/>
                             <constraint firstItem="79r-gi-xnF" firstAttribute="leading" secondItem="oXi-l9-fKg" secondAttribute="leading" id="5zY-Ad-2yC"/>
                             <constraint firstItem="j3I-Q4-hYw" firstAttribute="trailing" secondItem="oXi-l9-fKg" secondAttribute="trailing" id="6HP-cb-NBZ"/>
+                            <constraint firstItem="Pcu-ZH-xv2" firstAttribute="top" secondItem="1yc-uS-kUB" secondAttribute="top" id="7b7-U0-fdv"/>
                             <constraint firstItem="Glz-W0-YmT" firstAttribute="top" secondItem="j3I-Q4-hYw" secondAttribute="bottom" id="8te-5q-tEh"/>
                             <constraint firstItem="j3I-Q4-hYw" firstAttribute="leading" secondItem="oXi-l9-fKg" secondAttribute="leading" id="Aj1-2r-CU4"/>
                             <constraint firstItem="j3I-Q4-hYw" firstAttribute="top" secondItem="oXi-l9-fKg" secondAttribute="top" id="Etj-Fk-7L7"/>
@@ -309,17 +322,16 @@
                             <constraint firstItem="79r-gi-xnF" firstAttribute="height" secondItem="oXi-l9-fKg" secondAttribute="height" multiplier="1/6" id="LFa-MF-sR0"/>
                             <constraint firstItem="Glz-W0-YmT" firstAttribute="centerX" secondItem="1yc-uS-kUB" secondAttribute="centerX" id="N3B-zh-Yye"/>
                             <constraint firstAttribute="trailing" secondItem="Glz-W0-YmT" secondAttribute="trailing" id="OiR-ln-fe7"/>
-                            <constraint firstItem="ITt-pj-eJb" firstAttribute="leading" secondItem="oXi-l9-fKg" secondAttribute="leading" constant="8" id="Omq-3A-Kaf"/>
-                            <constraint firstItem="79r-gi-xnF" firstAttribute="top" secondItem="ITt-pj-eJb" secondAttribute="bottom" id="PJ2-sZ-bm1"/>
-                            <constraint firstItem="oXi-l9-fKg" firstAttribute="trailing" secondItem="ITt-pj-eJb" secondAttribute="trailing" constant="8" id="ZTG-yA-CCs"/>
                             <constraint firstItem="OTL-SY-LIO" firstAttribute="leading" secondItem="oXi-l9-fKg" secondAttribute="leading" id="aJL-jd-Xg5"/>
                             <constraint firstItem="79r-gi-xnF" firstAttribute="top" secondItem="Glz-W0-YmT" secondAttribute="bottom" id="aem-O9-JGq"/>
+                            <constraint firstItem="oXi-l9-fKg" firstAttribute="trailing" secondItem="Pcu-ZH-xv2" secondAttribute="trailing" id="bef-64-4oD"/>
+                            <constraint firstAttribute="bottom" secondItem="Pcu-ZH-xv2" secondAttribute="bottom" id="hGI-Gz-LtT"/>
                             <constraint firstItem="j3I-Q4-hYw" firstAttribute="height" secondItem="oXi-l9-fKg" secondAttribute="height" multiplier="1/12" id="ido-jk-nGF"/>
                             <constraint firstItem="j3I-Q4-hYw" firstAttribute="centerX" secondItem="1yc-uS-kUB" secondAttribute="centerX" id="kCz-iU-r9l"/>
                             <constraint firstItem="OTL-SY-LIO" firstAttribute="top" secondItem="j3I-Q4-hYw" secondAttribute="bottom" id="nIx-Uy-SGY"/>
                             <constraint firstItem="79r-gi-xnF" firstAttribute="top" secondItem="OTL-SY-LIO" secondAttribute="bottom" id="ryt-AT-vBg"/>
+                            <constraint firstItem="Pcu-ZH-xv2" firstAttribute="leading" secondItem="oXi-l9-fKg" secondAttribute="leading" id="ts8-dx-yz6"/>
                             <constraint firstItem="OTL-SY-LIO" firstAttribute="trailing" secondItem="oXi-l9-fKg" secondAttribute="trailing" id="whg-11-qlN"/>
-                            <constraint firstItem="ITt-pj-eJb" firstAttribute="top" secondItem="j3I-Q4-hYw" secondAttribute="bottom" id="y8O-AZ-7mC"/>
                             <constraint firstItem="Glz-W0-YmT" firstAttribute="leading" secondItem="1yc-uS-kUB" secondAttribute="leading" id="yYU-T5-WbK"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="oXi-l9-fKg"/>
@@ -329,7 +341,7 @@
                         <outlet property="filterView" destination="a4k-Q3-4Xh" id="0Pd-tf-c78"/>
                         <outlet property="imageViewContainer" destination="OTL-SY-LIO" id="o52-oF-vsp"/>
                         <outlet property="likeButton" destination="uNV-LF-rQJ" id="ABK-L3-3hj"/>
-                        <outlet property="loadingImage" destination="ITt-pj-eJb" id="1e8-nD-fd3"/>
+                        <outlet property="loadingImage" destination="Pcu-ZH-xv2" id="KIn-D5-u5B"/>
                         <outlet property="nextImageViewContainer" destination="Glz-W0-YmT" id="3wX-QO-TIG"/>
                         <outlet property="nopeButton" destination="QQv-i7-Kdd" id="LRF-im-mul"/>
                         <outlet property="panRecog" destination="mmv-Qq-HBg" id="Hyp-9c-gbZ"/>
