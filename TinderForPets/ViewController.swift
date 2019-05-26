@@ -308,6 +308,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
         
         
         for size in self.filterSections[0] {
+            
             if size.isSelected {
                 desiredSizes.append(size.name.lowercased())
             }
@@ -323,11 +324,12 @@ class ViewController: UIViewController,UpdateCardDelegate {
             }
         }
         
+        
         User.shared.allDogs = User.shared.allDogs.filter { (dog) -> Bool in
             return desiredGenders.contains(dog.gender) && desiredAges.contains(dog.age.rawValue) && desiredSizes.contains(dog.size.rawValue)
         }
         
-        if User.shared.allDogs.count < 5 {
+        if User.shared.allDogs.count < 20 {
             NetworkManager.shared().fetchAccessToken() // This also fetches dogs.
         }
                 
@@ -422,12 +424,76 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var message = ""
+        var shouldShowAlert = false
         self.filterSections[indexPath.section][indexPath.row].isSelected = !self.filterSections[indexPath.section][indexPath.row].isSelected
+        
+        switch indexPath.section {
+        case 0:
+            if isSizeFilterEmpty(){
+                message = "Please select at least one size!"
+                shouldShowAlert = true
+            }
+            
+        case 1:
+            if isGenderFilterEmpty() {
+                message = "Please select a gender!"
+                shouldShowAlert = true
+            }
+            
+        case 2:
+            if isAgeFilterEmpty() {
+                message = "Please select at least one age!"
+                shouldShowAlert = true
+            }
+        default:
+            return
+        }
+        
+        if shouldShowAlert {
+            let alert = UIAlertController(title: "Cannot apply filter", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
+                self.filterSections[indexPath.section][indexPath.row].isSelected = !self.filterSections[indexPath.section][indexPath.row].isSelected
+                
+            }))
+            
+            self.present(alert, animated: true) {
+                tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+            }
+        }
+
         self.tableView.reloadData()
     }
     
+    func isSizeFilterEmpty() -> Bool {
+        
+        if self.filterSections[0][0].isSelected == false && self.filterSections[0][1].isSelected == false && self.filterSections[0][2].isSelected == false && self.filterSections[0][3].isSelected == false {
+            return true
+        }
+        return false
+    }
+    
+    func isGenderFilterEmpty() -> Bool {
+        
+        if self.filterSections[1][0].isSelected == false && self.filterSections[1][1].isSelected == false{
+            return true
+        }
+        return false
+    }
+    
+    func isAgeFilterEmpty() -> Bool {
+        if self.filterSections[2][0].isSelected == false && self.filterSections[2][1].isSelected == false && self.filterSections[2][2].isSelected == false  {
+            return true
+        }
+        return false
+    }
+    
+    
+    
     
 }
+
+
 
 extension ViewController : NetworkManagerDelegate {
     func didFetchDogs() {
