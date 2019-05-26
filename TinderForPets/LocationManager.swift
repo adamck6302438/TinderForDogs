@@ -33,7 +33,12 @@ class LocationManager: NSObject {
                 } else {
                     let currentLocation = CLLocation(latitude: 43.6392151, longitude: -79.4260299)
                     let distanceInKM = Int(currentLocation.distance(from: location) / 1000.0)
-                    dog.distance = distanceInKM <= 2 ? Int.random(in: 1...20) : distanceInKM
+                    dog.distance = distanceInKM
+                    if let dogDistance = dog.distance {
+                        if dogDistance > 200 || dogDistance < 2 {
+                            dog.distance = Int.random(in: 5...150)
+                        }
+                    }
                 }
             }
         }

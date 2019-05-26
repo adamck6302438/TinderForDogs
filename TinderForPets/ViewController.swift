@@ -155,7 +155,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
             self.currentContainer.dogImageView.image = User.shared.allDogs[1].image
             self.currentContainer.nameLabel.text = User.shared.allDogs[1].name
             self.currentContainer.ageLabel.text = User.shared.allDogs[1].age.rawValue
-            self.currentContainer.distanceLabel.text = "Distance: " + String(User.shared.allDogs[1].distance!) + "km" 
+            self.currentContainer.distanceLabel.text = "Distance: " + String(User.shared.allDogs[1].distance ?? Int.random(in: 3...100)) + "km"
             self.nextImageViewContainer.dogImageView.image = User.shared.allDogs[0].image
             self.nextImageViewContainer.nameLabel.text = User.shared.allDogs[0].name
             self.nextImageViewContainer.ageLabel.text = User.shared.allDogs[0].age.rawValue
@@ -174,7 +174,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
             self.currentContainer.dogImageView.image = User.shared.allDogs[1].image
             self.currentContainer.nameLabel.text = User.shared.allDogs[1].name
             self.currentContainer.ageLabel.text = User.shared.allDogs[1].age.rawValue
-            self.currentContainer.distanceLabel.text = "Distance: " + String(User.shared.allDogs[1].distance!) + "km"
+            self.currentContainer.distanceLabel.text = "Distance: " + String(User.shared.allDogs[1].distance ?? Int.random(in: 3...100)) + "km"
             
             self.imageViewContainer.dogImageView.image = User.shared.allDogs[0].image
             self.imageViewContainer.nameLabel.text = User.shared.allDogs[0].name

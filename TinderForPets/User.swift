@@ -12,6 +12,7 @@ import UIKit
 
     static let shared = User()
     var allDogs = [Dog]()
+    var dogsBlackListIndentifiers = [String]()
     var disliked = [Dog]()
     var liked = [Dog]()
     var superLiked = [Dog]()

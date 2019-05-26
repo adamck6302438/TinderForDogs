@@ -75,7 +75,14 @@ enum DogAge: String {
         let dog = Dog(id: id, address: address, safariURL: safariURL, imageURL: imageURL, name: name, breed: breed, age: age, size: dogSize, description: description, color: color, isMale: isMale)
         LocationManager.shared.fetchDistanceFromCurrentLocationFor(dog: dog)
 //        NetworkManager.shared().fetchImage(for: dog)
-        return dog
+        
+        if User.shared.dogsBlackListIndentifiers.contains(dog.identifier) {
+            return nil
+        } else {
+            User.shared.dogsBlackListIndentifiers.append(dog.identifier)
+            return dog
+        }
+        
     }
     
 }
