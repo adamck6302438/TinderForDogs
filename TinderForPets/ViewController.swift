@@ -11,11 +11,17 @@ import UIKit
 class ViewController: UIViewController,UpdateCardDelegate {
     
     func initializeCard() {
-        self.loadingImage.removeFromSuperview()
-        self.imageViewContainer.isHidden = false
-        self.nextImageViewContainer.isHidden = false
-        view.isUserInteractionEnabled = true
-        updateDogCard()
+        
+        UIView.animate(withDuration: 0.75, animations: {
+            self.loadingImage.alpha = 0
+        }) { (_) in
+            self.loadingImage.removeFromSuperview()
+            self.imageViewContainer.isHidden = false
+            self.nextImageViewContainer.isHidden = false
+            self.view.isUserInteractionEnabled = true
+            self.updateDogCard()
+            
+        }
     }
 
     @IBOutlet weak var filterView: UIView!
@@ -23,7 +29,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
     
     @IBOutlet weak var nextImageViewContainer: ContainerView!
     @IBOutlet weak var imageViewContainer: ContainerView!
-    @IBOutlet weak var loadingImage: UIImageView!
+    @IBOutlet weak var loadingImage: UIView!
     @IBOutlet weak var nopeButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var superlikeButton: UIButton!
