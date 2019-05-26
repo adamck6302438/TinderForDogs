@@ -260,9 +260,13 @@ class ViewController: UIViewController,UpdateCardDelegate {
 
         self.imageViewContainer.dogImageView.image = User.shared.allDogs[0].image
         self.imageViewContainer.nameLabel.text = User.shared.allDogs[0].name
+        self.imageViewContainer.ageLabel.text = User.shared.allDogs[1].age.rawValue
+        self.imageViewContainer.distanceLabel.text = "Distance: " + String(User.shared.allDogs[1].distance ?? Int.random(in: 3...100)) + "km"
         
         self.nextImageViewContainer.dogImageView.image = User.shared.allDogs[1].image
         self.nextImageViewContainer.nameLabel.text = User.shared.allDogs[1].name
+        self.nextImageViewContainer.ageLabel.text = User.shared.allDogs[1].age.rawValue
+        self.nextImageViewContainer.distanceLabel.text = "Distance: " + String(User.shared.allDogs[1].distance ?? Int.random(in: 3...100)) + "km"
     }
     
     func setupCards()  {
