@@ -66,7 +66,7 @@ enum DogAge: String {
         guard let postcode = addressDictionary["postcode"] as? String else { return nil}
 
         let dog = Dog(id: id, address: postcode, safariURL: safariURL, imageURL: imageURL, name: name, breed: breed, age: age, size: dogSize, description: description, isMale: isMale)
-        LocationManager.shared.fetchDistanceFromCurrentLocationFor(dog: dog)
+        LocationManager.shared.fetchDistanceFromCurrentLocationFor(dog:dog)
         
         if User.shared.dogsBlackListIndentifiers.contains(dog.identifier) {
             return nil
