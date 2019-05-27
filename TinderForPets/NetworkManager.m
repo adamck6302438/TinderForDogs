@@ -54,14 +54,13 @@
         NSError *jsonError = nil;
         NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
         self.accessToken = jsonResponse[@"access_token"];
-        NSLog(@"accesToken is : %@", self.accessToken);
-        [self fetchDogData];
+
     }];
     
     [dataTask resume];
 }
 
--(void)fetchDogData {
+-(void)fetchDogDataWithLocation: (CLLocation*) location {
     
     if (!self.currentPage) {
         self.currentPage = 1;
@@ -69,7 +68,11 @@
         self.currentPage += 1;
     }
     
-    NSString * urlString = [NSString stringWithFormat:@"https://api.petfinder.com/v2/animals?type=dog&page=%ld",(long)self.currentPage];
+    NSString* lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
+    
+    NSString* lon = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
+ 
+    NSString * urlString = [NSString stringWithFormat:@"https://api.petfinder.com/v2/animals?type=dog&page=%ld&location=%@,%@",(long)self.currentPage,lat,lon];
     NSURL *url = [NSURL URLWithString:urlString];
     
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:url];
@@ -84,6 +87,15 @@
         if (error) {
             NSLog(@"error: %@", error.localizedDescription);
             return;
+        }
+        
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*) response;
+        
+        
+        //checking if token is expired if it is , fetch token then fetch dog data
+        if (httpResponse.statusCode == 401) {
+            [self fetchAccessToken];
+            [self fetchDogDataWithLocation:LocationManager.shared.currentLocation];
         }
         
         NSError *jsonError = nil;
@@ -134,6 +146,8 @@
     
     for (Dog *dog in User.shared.allDogs) {
         
+        
+        
         if (dog.image == nil) {
             
             NSURL *url = [NSURL URLWithString:dog.imageURL];
@@ -144,7 +158,7 @@
             
             NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithURL:url completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
                 if (error) {
-                    NSLog(@"error: %@", error.localizedDescription);
+                    NSLog(@"session error: %@", error.localizedDescription);
                     return;
                 }
                 
@@ -161,6 +175,8 @@
             
             [downloadTask resume];
         }
+        
+        
         
         
     }

@@ -74,7 +74,6 @@
 		78844AF52295F06700D2444D /* TinderForPets */ = {
 			isa = PBXGroup;
 			children = (
-				ED94841F229751FC007FAE15 /* LocationManager.swift */,
 				78844AF62295F06700D2444D /* AppDelegate.swift */,
 				78844AF82295F06700D2444D /* ViewController.swift */,
 				EDC5A0B322986B3200CC399D /* ContainerView.swift */,
@@ -85,6 +84,7 @@
 				78844AFD2295F06700D2444D /* TinderForPets.xcdatamodeld */,
 				7843117E2295FF4E000F3500 /* NetworkManager.h */,
 				7843117F2295FF4E000F3500 /* NetworkManager.m */,
+				ED94841F229751FC007FAE15 /* LocationManager.swift */,
 				7843117D2295FF4D000F3500 /* TinderForPets-Bridging-Header.h */,
 				784055AB2296F82400584C04 /* Dog.swift */,
 				784055AF2297033400584C04 /* User.swift */,

@@ -24,15 +24,14 @@ enum DogAge: String {
     var age:DogAge
     var size:DogSize
     var detailDescription:String
-    var color:String
     var gender:String
-    var distance:Int?
+    var distance:String = "Unknown"
     var image: UIImage?
     var imageURL:String
     var safariURL:String
     var address:String
     
-    init(id: String, address: String, safariURL: String, imageURL: String, name: String, breed: String, age: DogAge, size: DogSize, description: String, color: String, isMale: String) {
+    init(id: String, address: String, safariURL: String, imageURL: String, name: String, breed: String, age: DogAge, size: DogSize, description: String, isMale: String) {
         self.identifier = id
         self.address = address
         self.name = name
@@ -40,7 +39,6 @@ enum DogAge: String {
         self.age = age
         self.size = size
         self.detailDescription = description
-        self.color = color
         self.gender = isMale
         self.imageURL = imageURL
         self.safariURL = safariURL
@@ -61,20 +59,14 @@ enum DogAge: String {
         guard let size = json["size"] as? String else { return nil }
         guard let dogSize = DogSize.init(rawValue: size.lowercased()) else { return nil }
         let description = json["description"] as? String ?? ""
-        guard let colors = json["colors"] as? [String : Any] else { return nil }
-        let color = colors["primary"] as? String ?? ""
         guard let gender = json["gender"] as? String else { return nil }
         let isMale = gender.lowercased() == "male" ? "male" : "female"
         guard let contact = json["contact"] as? [String : Any] else { return nil }
         guard let addressDictionary = contact["address"] as? [String : Any] else { return nil }
-        let addressName = addressDictionary["address1"] as? String ?? "662 King St W"
-        guard let cityName = addressDictionary["city"] as? String else { return nil }
-        guard let stateName = addressDictionary["state"] as? String else { return nil }
-        guard let countryName = addressDictionary["country"] as? String else { return nil }
-        let address = addressName == "662 King St W" ? "662 King St W, Toronto, ON, Canada" : "\(addressName), \(cityName), \(stateName), \(countryName)"
-        let dog = Dog(id: id, address: address, safariURL: safariURL, imageURL: imageURL, name: name, breed: breed, age: age, size: dogSize, description: description, color: color, isMale: isMale)
+        guard let postcode = addressDictionary["postcode"] as? String else { return nil}
+
+        let dog = Dog(id: id, address: postcode, safariURL: safariURL, imageURL: imageURL, name: name, breed: breed, age: age, size: dogSize, description: description, isMale: isMale)
         LocationManager.shared.fetchDistanceFromCurrentLocationFor(dog: dog)
-//        NetworkManager.shared().fetchImage(for: dog)
         
         if User.shared.dogsBlackListIndentifiers.contains(dog.identifier) {
             return nil

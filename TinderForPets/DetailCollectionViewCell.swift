@@ -29,6 +29,6 @@ class DetailCollectionViewCell: UICollectionViewCell {
         }else{
             self.genderLabel.text = "Female"
         }
-        self.distanceLabel.text = String(dog.distance ?? Int.random(in: 3...100)) + "km"
+        self.distanceLabel.text = dog.distance
     }
 }

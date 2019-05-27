@@ -134,8 +134,6 @@ class ViewController: UIViewController,UpdateCardDelegate {
     
     func showNextCard() {
         
-        print("count: \(User.shared.allDogs.count)")
-        
         self.currentContainer.nopeIcon.alpha = 0
         self.currentContainer.likeIcon.alpha = 0
         self.currentContainer.superlikeIcon.alpha = 0
@@ -161,7 +159,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
             self.currentContainer.dogImageView.image = User.shared.allDogs[1].image
             self.currentContainer.nameLabel.text = User.shared.allDogs[1].name
             self.currentContainer.ageLabel.text = User.shared.allDogs[1].age.rawValue
-            self.currentContainer.distanceLabel.text = "Distance: " + String(User.shared.allDogs[1].distance ?? Int.random(in: 3...100)) + "km"
+            self.currentContainer.distanceLabel.text = "Distance: " + User.shared.allDogs[1].distance + " km"
             self.nextImageViewContainer.dogImageView.image = User.shared.allDogs[0].image
             self.nextImageViewContainer.nameLabel.text = User.shared.allDogs[0].name
             self.nextImageViewContainer.ageLabel.text = User.shared.allDogs[0].age.rawValue
@@ -180,7 +178,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
             self.currentContainer.dogImageView.image = User.shared.allDogs[1].image
             self.currentContainer.nameLabel.text = User.shared.allDogs[1].name
             self.currentContainer.ageLabel.text = User.shared.allDogs[1].age.rawValue
-            self.currentContainer.distanceLabel.text = "Distance: " + String(User.shared.allDogs[1].distance ?? Int.random(in: 3...100)) + "km"
+            self.currentContainer.distanceLabel.text = "Distance: " + User.shared.allDogs[1].distance + " km"
             
             self.imageViewContainer.dogImageView.image = User.shared.allDogs[0].image
             self.imageViewContainer.nameLabel.text = User.shared.allDogs[0].name
@@ -251,7 +249,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
     
     func fetchMoreDogs() {
         if User.shared.allDogs.count < 20 {
-            NetworkManager.shared().fetchAccessToken()
+            NetworkManager.shared().fetchDogData(with: LocationManager.shared.currentLocation!)
         }
     }
     
@@ -260,13 +258,13 @@ class ViewController: UIViewController,UpdateCardDelegate {
 
         self.imageViewContainer.dogImageView.image = User.shared.allDogs[0].image
         self.imageViewContainer.nameLabel.text = User.shared.allDogs[0].name
-        self.imageViewContainer.ageLabel.text = User.shared.allDogs[1].age.rawValue
-        self.imageViewContainer.distanceLabel.text = "Distance: " + String(User.shared.allDogs[1].distance ?? Int.random(in: 3...100)) + "km"
+        self.imageViewContainer.ageLabel.text = User.shared.allDogs[0].age.rawValue
+        self.imageViewContainer.distanceLabel.text = "Distance: " + User.shared.allDogs[1].distance + " km"
         
         self.nextImageViewContainer.dogImageView.image = User.shared.allDogs[1].image
         self.nextImageViewContainer.nameLabel.text = User.shared.allDogs[1].name
         self.nextImageViewContainer.ageLabel.text = User.shared.allDogs[1].age.rawValue
-        self.nextImageViewContainer.distanceLabel.text = "Distance: " + String(User.shared.allDogs[1].distance ?? Int.random(in: 3...100)) + "km"
+        self.nextImageViewContainer.distanceLabel.text = "Distance: " + User.shared.allDogs[1].distance + " km"
     }
     
     func setupCards()  {
@@ -330,7 +328,7 @@ class ViewController: UIViewController,UpdateCardDelegate {
         }
         
         if User.shared.allDogs.count < 20 {
-            NetworkManager.shared().fetchAccessToken() // This also fetches dogs.
+            NetworkManager.shared().fetchDogData(with: LocationManager.shared.currentLocation!)
         }
                 
         
@@ -488,14 +486,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         return false
     }
     
-    
-    
-    
 }
 
 
 
 extension ViewController : NetworkManagerDelegate {
+    
     func didFetchDogs() {
         self.applyFilters()
     }
