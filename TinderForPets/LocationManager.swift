@@ -20,7 +20,7 @@ import CoreLocation
     func fetchDistanceFromCurrentLocationFor(dog: Dog) {
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(dog.address) { (placemarks, error) in
-            print("location: \(dog.address)")
+            
             if let error = error {
                 print("Location Error: \(error)")
             } else {

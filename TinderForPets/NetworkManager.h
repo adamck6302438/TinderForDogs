@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) id<UpdateCardDelegate> updateCardDelegate;
 @property (strong, nonatomic) id <NetworkManagerDelegate> delegate;
 
--(void)fetchAccessToken;
+
 -(void)fetchDogDataWithLocation: (CLLocation*) location;
 -(void)fetchImageForDogsWithCompletionHandler:(void(^)(BOOL))completed;
 + (NetworkManager *) shared;
